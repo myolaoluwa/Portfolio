@@ -32,9 +32,9 @@ function CashflowPreview() {
     <div className="window-topbar"><div className="window-dots"><i /><i /><i /></div><span>cashflow / overview</span><span className="window-date">SAMPLE DATA</span></div>
     <div className="cashflow-app"><aside className="cashflow-sidebar"><strong>c.</strong><span className="preview-active">⌂</span><span>↔</span><span>▤</span><span>◷</span><span>◎</span></aside>
       <div className="cashflow-content"><div className="cashflow-heading"><div><span>OVERVIEW / OCTOBER</span><strong>Good morning.</strong></div><span className="cashflow-avatar">M</span></div>
-        <div className="cashflow-balance"><span>AVAILABLE BALANCE <i>•••</i></span><strong>₦ 2,840,500</strong><small>Across your accounts</small><div className="cashflow-chart">{Array.from({ length: 12 }, (_, i) => <i key={i} />)}</div></div>
-        <div className="cashflow-summary"><div><span>INCOME</span><strong>₦ 680,000</strong></div><div><span>SPENDING</span><strong>₦ 214,300</strong></div><div><span>BUDGET LEFT</span><strong>₦ 85,700</strong></div></div>
-        <div className="cashflow-activity"><strong>Recent activity</strong><span>Groceries <b>− ₦ 24,500</b></span><span>Client payment <b>+ ₦ 185,000</b></span></div>
+        <div className="cashflow-balance"><span>AVAILABLE BALANCE <i>•••</i></span><strong>$2,840,500</strong><small>Across your accounts</small><div className="cashflow-chart">{Array.from({ length: 12 }, (_, i) => <i key={i} />)}</div></div>
+        <div className="cashflow-summary"><div><span>INCOME</span><strong>$680,000</strong></div><div><span>SPENDING</span><strong>$214,300</strong></div><div><span>BUDGET LEFT</span><strong>$85,700</strong></div></div>
+        <div className="cashflow-activity"><strong>Recent activity</strong><span>Groceries <b>− $24,500</b></span><span>Client payment <b>+ $185,000</b></span></div>
       </div>
     </div><div className="window-caption"><span>WEB + MOBILE APP</span><span>ILLUSTRATIVE INTERFACE / SAMPLE DATA</span></div>
   </div>;

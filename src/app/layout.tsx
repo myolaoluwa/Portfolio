@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description:
     "DelighTech builds thoughtful web and mobile apps, product experiences, and software for work, markets, and everyday life.",
   metadataBase: new URL("https://portfolio-three-beta-l9pbmwprkk.vercel.app"),
+  icons: {
+    icon: "/delightech-mark.svg",
+  },
   alternates: {
     canonical: "/",
   },

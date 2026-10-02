@@ -1,5 +1,9 @@
 import { ImageResponse } from "next/og";
 
+const logoMark = `data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none"><rect x="2" y="2" width="60" height="60" rx="18" fill="#18211D"/><path d="M39 13H31C20.507 13 12 21.507 12 32s8.507 19 19 19h8" stroke="#D0F766" stroke-width="5.5" stroke-linecap="round"/><path d="M28 38 50 16M38 16h12v12" stroke="#ED684A" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+)}`;
+
 export const alt =
   "DelighTech by Myolaoluwa: thoughtful software for web, mobile, and everyday life.";
 export const size = { width: 1200, height: 630 };
@@ -73,7 +77,7 @@ export default function OpenGraphImage() {
                 letterSpacing: 0,
               }}
             >
-              DT
+              <img src={logoMark} width={30} height={30} alt="" />
             </div>
             <span>DELIGHTECH / FIELD NOTES</span>
           </div>

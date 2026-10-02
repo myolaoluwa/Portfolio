@@ -35,7 +35,9 @@ button { color: inherit; }
 .portfolio-shell { overflow: clip; }
 .reading-progress { position: fixed; z-index: 30; top: 0; left: 0; height: 3px; background: var(--orange); transition: width 100ms linear; }
 .site-header { height: 74px; padding: 0 6.4vw; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: rgba(241, 243, 236, .94); position: sticky; top: 0; z-index: 20; backdrop-filter: blur(14px); }
-.brand-mark, .footer-brand { font: 700 22px/1 var(--display); letter-spacing: 0; }
+.brand-mark, .footer-brand { display: inline-flex; align-items: center; gap: 10px; font: 700 22px/1 var(--display); letter-spacing: 0; }
+.brand-mark::before, .footer-brand::before { content: ""; width: 30px; height: 30px; flex: 0 0 30px; background: url("/delightech-mark.svg") center / contain no-repeat; }
+.footer-brand::before { width: 25px; height: 25px; flex-basis: 25px; }
 .brand-mark span, .footer-brand span { color: var(--orange); }
 .main-nav { display: flex; align-items: center; gap: 42px; }
 .main-nav > a { display: inline-flex; align-items: center; gap: 6px; color: #475149; font-size: 13px; transition: color .2s ease; }
@@ -104,7 +106,7 @@ button { color: inherit; }
 .cinema-topline { position: absolute; top: 104px; left: 9.3vw; right: 8vw; display: flex; justify-content: space-between; gap: 20px; color: rgba(245,244,238,.65); font: 9px var(--mono); }
 .cinema-rail { position: absolute; z-index: 4; top: 50%; left: 28px; display: flex; flex-direction: column; align-items: center; gap: 17px; transform: translateY(-50%); }
 .cinema-rail-brand, .cinema-rail-end { color: rgba(245,244,238,.67); font: 9px var(--mono); }
-.cinema-rail-brand { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid rgba(245,244,238,.7); border-radius: 50%; color: var(--lime); }
+.cinema-rail-brand { width: 29px; height: 29px; display: grid; place-items: center; border: 0; border-radius: 0; background: url("/delightech-mark.svg") center / contain no-repeat; color: transparent; font-size: 0; }
 .cinema-rail-steps { display: grid; gap: 12px; }
 .cinema-rail-steps button { min-height: 20px; display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: transparent; color: rgba(245,244,238,.46); cursor: pointer; }
 .cinema-rail-steps button span { width: 16px; text-align: right; font: 8px var(--mono); opacity: 0; transform: translateX(-3px); transition: opacity .25s ease, transform .25s ease; }

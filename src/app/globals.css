@@ -506,7 +506,7 @@ button { color: inherit; }
   .archive-links .icon-link svg { width: 13px; }
   .archive-status { font-size: 7px; }
   .all-github-link { margin-top: 32px; font-size: 10px; }
-  .approach-section { padding: 70px 20px 58px; grid-template-columns: 1fr; gap: 30px; }
+  .approach-section { padding: 70px 20px 58px; grid-template-columns: minmax(0, 1fr); gap: 30px; }
   .approach-intro h2 { font-size: 56px; }
   .approach-intro > p { margin-top: 17px; font-size: 12px; }
   .approach-steps { padding-top: 0; }
@@ -570,8 +570,8 @@ button { color: inherit; }
   .cinema-copy { top: 132px; left: 42px; right: 18px; width: auto; transform: none; }
   .cinema-eyebrow { margin-bottom: 12px; font-size: 8px; }
   .cinema-eyebrow span { margin-right: 5px; }
-  .cinema-copy h1 { font-size: 42px; }
-  .cinema-copy h2 { font-size: 35px; }
+  .cinema-copy h1 { font-size: 42px; line-height: 1.1; }
+  .cinema-copy h2 { font-size: 35px; line-height: 1.1; }
   .cinema-description { max-width: 320px; margin-top: 12px; font-size: 12px; line-height: 1.5; }
   .cinema-project-stamp { margin-top: 14px; padding-left: 8px; gap: 3px; }
   .cinema-project-stamp span { font-size: 6px; }
@@ -634,18 +634,52 @@ button { color: inherit; }
 
 @media (max-width: 700px) and (max-height: 720px) {
   .cinema-stage { min-height: 580px; }
-  .cinema-copy { top: 111px; }
-  .cinema-copy h1 { font-size: 36px; }
-  .cinema-copy h2 { font-size: 31px; }
-  .cinema-description { max-width: 270px; font-size: 11px; }
+  .cinema-copy { top: 90px; }
+  .cinema-copy h1 { font-size: 33px; line-height: 1.08; }
+  .cinema-copy h2 { font-size: 30px; line-height: 1.08; }
+  .cinema-description { max-width: 270px; margin-top: 8px; font-size: 10px; line-height: 1.35; }
   .cinema-project-stamp { display: none; }
-  .cinema-phone { width: 146px; }
-  .cinema-device-wrap, .cinema-device-wrap-0, .cinema-device-wrap-1, .cinema-device-wrap-2, .cinema-device-wrap-3, .cinema-device-wrap-4 { right: 13px; bottom: 45px; }
+  .cinema-phone { width: 132px; }
+  .cinema-device-wrap, .cinema-device-wrap-0, .cinema-device-wrap-1, .cinema-device-wrap-2, .cinema-device-wrap-3, .cinema-device-wrap-4 { right: 13px; bottom: 32px; }
 }
 
 @keyframes cinema-image-in { from { opacity: .45; transform: scale(1.11); } to { opacity: 1; transform: scale(1); } }
 @keyframes cinema-copy-in { from { opacity: 0; translate: 0 20px; } to { opacity: 1; translate: 0 0; } }
 @keyframes cinema-device-in { from { opacity: 0; filter: blur(8px); } to { opacity: 1; filter: blur(0); } }
+
+@media (min-width: 701px) and (max-width: 1120px) {
+  .cinema-copy { left: 10vw; width: 42vw; }
+  .cinema-copy h1 { font-size: 58px; }
+  .cinema-copy h2 { font-size: 48px; }
+  .cinema-description { max-width: 390px; margin-top: 16px; font-size: 13px; }
+  .cinema-device-wrap, .cinema-device-wrap-0, .cinema-device-wrap-1, .cinema-device-wrap-2, .cinema-device-wrap-3, .cinema-device-wrap-4 { right: 5%; }
+  .cinema-phone { width: min(280px, 29vw); }
+}
+
+@media (max-width: 380px) {
+  .cinema-topline { left: 16px; right: 16px; }
+  .cinema-copy { top: 112px; left: 38px; right: 12px; }
+  .cinema-eyebrow { margin-bottom: 8px; font-size: 7px; }
+  .cinema-copy h1 { font-size: 32px; }
+  .cinema-copy h2 { font-size: 29px; }
+  .cinema-description { max-width: 225px; margin-top: 9px; font-size: 10px; line-height: 1.4; }
+  .cinema-project-stamp { margin-top: 9px; }
+  .cinema-work-link { min-height: 34px; margin-top: 9px; gap: 8px; padding: 0 8px; font-size: 9px; }
+  .cinema-device-wrap, .cinema-device-wrap-0, .cinema-device-wrap-1, .cinema-device-wrap-2, .cinema-device-wrap-3, .cinema-device-wrap-4 { right: 10px; bottom: 49px; }
+  .cinema-phone { width: 154px; }
+  .approach-intro h2 { font-size: 50px; }
+}
+
+@media (max-width: 380px) and (max-height: 720px) {
+  .cinema-copy { top: 82px; }
+  .cinema-copy h1 { font-size: 27px; }
+  .cinema-copy h2 { font-size: 26px; }
+  .cinema-description { max-width: 215px; margin-top: 7px; font-size: 9px; line-height: 1.35; }
+  .cinema-project-stamp { display: none; }
+  .cinema-device-wrap, .cinema-device-wrap-0, .cinema-device-wrap-1, .cinema-device-wrap-2, .cinema-device-wrap-3, .cinema-device-wrap-4 { right: 8px; bottom: 34px; }
+  .cinema-phone { width: 124px; }
+  .cinema-work-link { min-height: 31px; margin-top: 7px; font-size: 8px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .cinema-backdrop, .cinema-copy, .cinema-device-wrap { animation: none !important; transition: none !important; }

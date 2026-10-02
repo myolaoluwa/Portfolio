@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, CodeXml, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, CodeXml, MapPin, Menu, X } from "lucide-react";
 
 function ElaraPreview() {
   return <div className="product-window elara-window" aria-label="Elara workspace interface preview">
@@ -150,6 +150,51 @@ function CinematicIntro({ progress, activeScene, onChapterSelect }: { progress: 
   </section>;
 }
 
+const capabilityGroups = [
+    {
+      number: "01",
+      title: "Web engineering",
+      description: "Responsive applications, data-rich dashboards, and interfaces built to feel clear in daily use.",
+      stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+      applied: "Elara · Oracle",
+    },
+    {
+      number: "02",
+      title: "Cross-platform mobile",
+      description: "Mobile and web product flows with shared logic, validation, and a consistent interaction model.",
+      stack: ["Expo", "React Native", "TypeScript", "Shared types"],
+      applied: "Cashflow",
+    },
+    {
+      number: "03",
+      title: "Backend & data",
+      description: "Persistence choices for connected services, financial records, and local-first personal tools.",
+      stack: ["PostgreSQL", "Prisma", "Supabase", "SQLite", "PGlite", "Python"],
+      applied: "Cashflow · BizFlow · Nomi",
+    },
+    {
+      number: "04",
+      title: "AI & intelligence",
+      description: "Context-aware workflows and structured signals that help people understand information and decide what to do next.",
+      stack: ["AI workflows", "Structured data", "Signal detection", "Human review"],
+      applied: "Elara · Oracle",
+    },
+    {
+      number: "05",
+      title: "Finance & Web3",
+      description: "Product systems for managing money and investigating the activity behind fast-moving markets.",
+      stack: ["Bookkeeping", "Cash management", "On-chain activity", "Market signals"],
+      applied: "Cashflow · Oracle",
+    },
+    {
+      number: "06",
+      title: "Product quality",
+      description: "Thoughtful states, local-first behavior, and responsive details that hold up beyond the happy path.",
+      stack: ["Responsive UI", "Offline-ready", "Error states", "Shared validation"],
+      applied: "Nomi · BizFlow",
+    },
+];
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -186,7 +231,7 @@ export default function Home() {
 
   return <main className="portfolio-shell" id="top">
     <div className="reading-progress" style={{ width: `${progress}%` }} />
-    <header className={`site-header ${cinemaVisible ? "site-header-cinema" : ""}`}><a className="brand-mark" href="#top" aria-label="DelighTech, back to top">DelighTech</a><button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button><nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation"><a href="#work" onClick={() => setMenuOpen(false)}>Selected work</a><a href="#approach" onClick={() => setMenuOpen(false)}>Approach</a><a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>Let’s talk <ArrowUpRight size={14} /></a></nav></header>
+    <header className={`site-header ${cinemaVisible ? "site-header-cinema" : ""}`}><a className="brand-mark" href="#top" aria-label="DelighTech, back to top">DelighTech</a><button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button><nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation"><a href="#work" onClick={() => setMenuOpen(false)}>Selected work</a><a href="#capabilities" onClick={() => setMenuOpen(false)}>Capabilities</a><a href="#approach" onClick={() => setMenuOpen(false)}>Approach</a><a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>Let’s talk <ArrowUpRight size={14} /></a></nav></header>
 
     <CinematicIntro progress={cinemaProgress} activeScene={activeScene} onChapterSelect={jumpToChapter} />
 
@@ -201,8 +246,8 @@ export default function Home() {
     <article className="featured-project bizflow-project"><div className="feature-copy"><div className="project-kicker"><span>05</span><span>GOALS · DAILY ACTION</span><span className="status-chip"><i /> LIVE BUILD</span></div><div className="feature-title-row"><span className="project-monogram bizflow-monogram">B</span><h3>BizFlow</h3></div><p className="feature-lede">Make meaningful goals easier to move on.</p><p className="feature-description">A mobile-first workspace for turning big intentions into manageable daily steps, supported by a Today dashboard, progress tracking, and thoughtful team summaries.</p><div className="feature-tags"><span>TypeScript</span><span>SQLite</span><span>Responsive product</span><span>Team summaries</span></div><div className="feature-links"><a href="https://bizflow-eta-two.vercel.app" target="_blank" rel="noreferrer">Explore BizFlow <ArrowUpRight size={15} /></a><a href="https://github.com/myolaoluwa/bizflow" target="_blank" rel="noreferrer">Source code <CodeXml size={14} /></a></div></div><div className="feature-visual"><BizflowPreview /></div><span className="feature-index-ghost">05</span></article>
 
     <section className="approach-section" id="approach" aria-labelledby="approach-title"><div className="approach-intro"><span className="section-index">04 / HOW I APPROACH IT</span><h2 id="approach-title">Thoughtful<br />from <em>first sketch</em><br />to first use.</h2><p>I like working across the whole product: understanding the job, shaping the interface, and making the details hold up in real use.</p></div><div className="approach-steps"><div className="approach-step"><span>01</span><div><h3>Find the friction</h3><p>Start with the real workflow, the people inside it, and the part that keeps getting in the way.</p></div><ArrowDownRight size={17} /></div><div className="approach-step"><span>02</span><div><h3>Shape the product</h3><p>Turn the messy middle into clear priorities, calm interfaces, and a useful first version.</p></div><ArrowDownRight size={17} /></div><div className="approach-step"><span>03</span><div><h3>Build for the edges</h3><p>Make the everyday path feel easy, and give errors, empty states, and sensitive actions the same care.</p></div><ArrowDownRight size={17} /></div></div></section>
-    <section className="toolkit-strip" aria-label="Tools and technologies"><span className="section-index">WEB + APP DEVELOPMENT</span><div className="toolkit-list"><span>TypeScript</span><i /><span>React</span><i /><span>Next.js</span><i /><span>Expo</span><i /><span>React Native</span><i /><span>Python</span><i /><span>PostgreSQL</span><i /><span>Supabase</span></div></section>
+    <section className="capabilities-section" id="capabilities" aria-labelledby="capabilities-title"><div className="capabilities-heading"><div><span className="section-index">03 / TECHNICAL CAPABILITIES</span><h2 id="capabilities-title">Built across<br /><em>the whole stack.</em></h2></div><p>From interface to persistence, I choose tools around the job the product needs to do. Here’s the range behind the work.</p></div><div className="capabilities-grid">{capabilityGroups.map((group) => <article className="capability-item" key={group.number}><div className="capability-topline"><span>{group.number}</span><i /></div><h3>{group.title}</h3><p>{group.description}</p><div className="capability-stack" aria-label={`${group.title} technologies`}>{group.stack.map((technology) => <span key={technology}>{technology}</span>)}</div><div className="capability-applied"><span>IN PRACTICE</span><strong>{group.applied}</strong></div></article>)}</div></section>
     <section className="contact-section" id="contact" aria-labelledby="contact-title"><div className="contact-stamp">OPEN<br />SOURCE<br /><span>♥</span><br />OPEN MIND</div><div className="contact-content"><span className="section-index">05 / YOUR TURN</span><h2 id="contact-title">Have a useful<br />problem? <em>Let’s build.</em></h2><p>If you’re working on something that could make a real day a little easier, I’d like to hear about it.</p><a className="button button-dark" href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer">Find me on GitHub <ArrowUpRight size={16} /></a></div><div className="contact-mark">DT<span>.</span></div></section>
-    <footer className="site-footer"><a className="footer-brand" href="#top">DelighTech</a><span>CEO: Olaoluwa Moshood.</span><div><a href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13} /></a><a href="#top">Back to top <ArrowRight size={13} /></a></div><small>© 2026 DELIGHTECH</small></footer>
+    <footer className="site-footer"><a className="footer-brand" href="#top">DelighTech</a><div className="footer-identity"><span className="footer-ceo">CEO: Olaoluwa Moshood</span><div className="footer-meta"><span><MapPin size={12} aria-hidden="true" /> Lagos, Nigeria</span><span>Working with teams worldwide</span></div></div><div className="footer-links"><a href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13} /></a><a href="#top">Back to top <ArrowRight size={13} /></a></div><small>© 2026 DELIGHTECH</small></footer>
   </main>;
 }

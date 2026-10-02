@@ -62,22 +62,133 @@ function BizflowPreview() {
   </div>;
 }
 
+const cinematicChapters = [
+  {
+    marker: "01",
+    eyebrow: "START WITH THE QUESTION",
+    title: <>Good software begins with a <em>better question.</em></>,
+    description: "I’m Myolaoluwa. I turn the complicated parts of work and everyday life into products that feel clear, useful, and human.",
+    product: "DELIGHTECH",
+    screenTitle: "A useful place to begin",
+  },
+  {
+    marker: "02",
+    eyebrow: "FIND THE SIGNAL",
+    title: <>Make the important thing <em>impossible to miss.</em></>,
+    description: "Oracle brings scattered market activity into focus, so a signal comes with context instead of noise.",
+    product: "ORACLE",
+    screenTitle: "Radar / live signals",
+  },
+  {
+    marker: "03",
+    eyebrow: "CONNECT THE CONTEXT",
+    title: <>Keep the whole picture <em>in reach.</em></>,
+    description: "Elara gives busy teams one grounded place for the meetings, follow-ups, and details that should not get lost.",
+    product: "ELARA",
+    screenTitle: "Your day, in focus",
+  },
+  {
+    marker: "04",
+    eyebrow: "MAKE MONEY FEEL CLEARER",
+    title: <>A calmer view of what comes <em>in and out.</em></>,
+    description: "Cashflow turns everyday money movement into a picture people can actually make decisions from.",
+    product: "CASHFLOW",
+    screenTitle: "Your money, at a glance",
+  },
+  {
+    marker: "05",
+    eyebrow: "MAKE THE NEXT STEP SMALLER",
+    title: <>Turn good intentions into <em>real momentum.</em></>,
+    description: "From personal routines to ambitious products, the best next step is the one that feels possible to take.",
+    product: "NOMI / BIZFLOW",
+    screenTitle: "A little more in balance",
+  },
+];
+
+function CinematicPhone({ scene }: { scene: number }) {
+  return <div className={`cinema-phone cinema-phone-${scene}`} aria-label={`${cinematicChapters[scene].product} product preview`}>
+    <div className="cinema-phone-screen">
+      <div className="phone-status"><span>9:41</span><span>● ● ▰</span></div>
+      <div className="phone-title-row"><div><span>{cinematicChapters[scene].product}</span><strong>{cinematicChapters[scene].screenTitle}</strong></div><b>DT</b></div>
+      {scene === 0 && <div className="phone-origin-screen"><span>PRODUCT STUDIO / 2026</span><strong>Make the next step<br />feel obvious.</strong><div className="origin-flow"><i>QUESTION</i><b /><i>INTERFACE</i><b /><i>IMPACT</i></div><small>WEB · MOBILE · PRODUCT</small></div>}
+      {scene === 1 && <div className="phone-radar-screen"><div className="phone-signal"><span>SMART MONEY CONVERGENCE</span><strong>$BONK</strong><small>9 tracked wallets moved in 12 min</small><b>92 <i>/ 100</i></b></div><div className="phone-signal"><span>WHALE ROTATION</span><strong>$JUP → $RAY</strong><small>$84K moved across 4 wallets</small></div><div className="phone-signal"><span>DISTRIBUTION</span><strong>$WIF</strong><small>7 wallets reduced positions</small></div><div className="phone-phone-foot">SIGNALS / EXPLAINED</div></div>}
+      {scene === 2 && <div className="phone-elara-screen"><div className="phone-brief"><span>THURSDAY · YOUR DAY</span><strong>Good morning.</strong><small>3 meetings · 2 follow-ups</small></div><div className="phone-event"><b>09:30</b><span><strong>Product sync</strong><small>Studio room · 30 min</small></span></div><div className="phone-event"><b>11:00</b><span><strong>Quarterly review</strong><small>Briefing ready</small></span></div><div className="phone-event"><b>14:15</b><span><strong>Partnership call</strong><small>2 open follow-ups</small></span></div><div className="phone-assist">✳ &nbsp; Your day, in focus</div></div>}
+      {scene === 3 && <div className="phone-cashflow-screen"><div className="phone-money-card"><span>AVAILABLE BALANCE</span><strong>₦ 2,840,500</strong><small>Across your accounts</small><div className="phone-chart">{[32, 52, 40, 68, 54, 76, 61, 92, 70, 100].map((height, index) => <i key={index} style={{ height: `${height}%` }} />)}</div></div><div className="phone-money-totals"><div><span>INCOME</span><b>₦ 680,000</b></div><div><span>SPENDING</span><b>₦ 214,300</b></div></div><div className="phone-transaction"><span>Groceries</span><b>− ₦ 24,500</b></div><div className="phone-transaction"><span>Client payment</span><b>+ ₦ 185,000</b></div></div>}
+      {scene === 4 && <div className="phone-nomi-screen"><div className="phone-week-card"><span>YOUR WEEK AT A GLANCE</span><strong>A little more<br />in balance.</strong><div className="phone-week-bars">{[32, 50, 40, 72, 57, 82, 61, 92].map((height, index) => <i key={index} style={{ height: `${height}%` }} />)}</div></div><div className="phone-life-card"><span>TIME SPENT</span><strong>18h 40m</strong><div><i /><i /><i /></div><small>Work · Learning · Life</small></div><div className="phone-goal-card"><span>YOUR NEXT STEP</span><strong>Build a steady morning</strong><small>4 day streak · 68% to your goal</small><div><i /></div></div></div>}
+      <div className="phone-tabbar"><span>⌂<small>HOME</small></span><span>◷<small>ACTIVITY</small></span><span>◎<small>PROFILE</small></span></div>
+    </div>
+    <span className="phone-side-button" />
+  </div>;
+}
+
+function CinematicIntro({ progress, activeScene, onChapterSelect }: { progress: number; activeScene: number; onChapterSelect: (index: number) => void }) {
+  const chapter = cinematicChapters[activeScene];
+  return <section className="cinema-track" id="cinematic-intro" aria-label="A short film about how I build products">
+    <div className="cinema-stage">
+      <div className={`cinema-backdrop cinema-backdrop-${activeScene}`} key={activeScene} aria-hidden="true" />
+      <div className="cinema-wash" aria-hidden="true" />
+      <div className="cinema-grain" aria-hidden="true" />
+      <div className="cinema-topline"><span>DELIGHTECH / FIELD NOTES</span><span>WEB · MOBILE · PRODUCT</span></div>
+      <nav className="cinema-rail" aria-label="Intro chapters">
+        <span className="cinema-rail-brand">DT</span>
+        <div className="cinema-rail-steps">{cinematicChapters.map((item, index) => <button type="button" key={item.marker} className={activeScene === index ? "is-current" : ""} aria-label={`Go to chapter ${item.marker}: ${item.eyebrow.toLowerCase()}`} aria-current={activeScene === index ? "step" : undefined} onClick={() => onChapterSelect(index)}><span>{item.marker}</span><i /></button>)}</div>
+        <span className="cinema-rail-end">05</span>
+      </nav>
+      <div className="cinema-copy" key={`copy-${activeScene}`}>
+        <p className="cinema-eyebrow"><span>{chapter.marker}</span> {chapter.eyebrow}</p>
+        {activeScene === 0 ? <h1>{chapter.title}</h1> : <h2>{chapter.title}</h2>}
+        <p className="cinema-description">{chapter.description}</p>
+        <div className="cinema-project-stamp"><span>NOW IN FRAME</span><strong>{chapter.product}</strong></div>
+        {activeScene === cinematicChapters.length - 1 && <a className="cinema-work-link" href="#work">Explore selected work <ArrowUpRight size={17} /></a>}
+      </div>
+      <div className={`cinema-device-wrap cinema-device-wrap-${activeScene}`} key={`device-${activeScene}`}>
+        <CinematicPhone scene={activeScene} />
+      </div>
+      <div className="cinema-bottomline"><span>MYOLAOLUWA / INDEPENDENT PRODUCT DEVELOPER</span><span>{chapter.marker} — 05</span><button type="button" onClick={() => onChapterSelect(Math.min(activeScene + 1, cinematicChapters.length - 1))} disabled={activeScene === cinematicChapters.length - 1}><span>{activeScene === cinematicChapters.length - 1 ? "EXPLORE THE WORK" : "SCROLL TO CONTINUE"}</span><i><ArrowDown size={17} /></i></button></div>
+      <div className="cinema-track-progress" aria-hidden="true"><i style={{ height: `${progress * 100}%` }} /></div>
+    </div>
+  </section>;
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [cinemaProgress, setCinemaProgress] = useState(0);
+  const [activeScene, setActiveScene] = useState(0);
+  const [cinemaVisible, setCinemaVisible] = useState(true);
 
   useEffect(() => {
-    const update = () => { const distance = document.documentElement.scrollHeight - window.innerHeight; setProgress(distance > 0 ? window.scrollY / distance * 100 : 0); };
+    const update = () => {
+      const distance = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(distance > 0 ? window.scrollY / distance * 100 : 0);
+      const track = document.getElementById("cinematic-intro");
+      if (!track) return;
+      const bounds = track.getBoundingClientRect();
+      const travel = Math.max(1, track.offsetHeight - window.innerHeight);
+      const nextProgress = Math.max(0, Math.min(1, -bounds.top / travel));
+      setCinemaProgress(nextProgress);
+      setActiveScene(Math.min(cinematicChapters.length - 1, Math.floor(nextProgress * cinematicChapters.length)));
+      setCinemaVisible(bounds.bottom > 74 && bounds.top < window.innerHeight);
+    };
     update(); window.addEventListener("scroll", update, { passive: true }); window.addEventListener("resize", update);
     return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
   }, []);
 
+  const jumpToChapter = (index: number) => {
+    const track = document.getElementById("cinematic-intro");
+    if (!track) return;
+    const travel = track.offsetHeight - window.innerHeight;
+    const start = window.scrollY + track.getBoundingClientRect().top;
+    const target = start + travel * (index / cinematicChapters.length);
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+    window.scrollTo({ top: target, behavior });
+  };
+
   return <main className="portfolio-shell" id="top">
     <div className="reading-progress" style={{ width: `${progress}%` }} />
-    <header className="site-header"><a className="brand-mark" href="#top" aria-label="DelighTech, back to top">DelighTech</a><button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button><nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation"><a href="#work" onClick={() => setMenuOpen(false)}>Selected work</a><a href="#approach" onClick={() => setMenuOpen(false)}>Approach</a><a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>Let’s talk <ArrowUpRight size={14} /></a></nav></header>
+    <header className={`site-header ${cinemaVisible ? "site-header-cinema" : ""}`}><a className="brand-mark" href="#top" aria-label="DelighTech, back to top">DelighTech</a><button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button><nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation"><a href="#work" onClick={() => setMenuOpen(false)}>Selected work</a><a href="#approach" onClick={() => setMenuOpen(false)}>Approach</a><a className="nav-contact" href="#contact" onClick={() => setMenuOpen(false)}>Let’s talk <ArrowUpRight size={14} /></a></nav></header>
 
-    <section className="hero-section" aria-labelledby="hero-title"><div className="hero-overline"><span>SOFTWARE & APP DEVELOPMENT</span><span>BUILDING WITH INTENT / 2026</span></div><div className="hero-layout"><div className="hero-copy"><p className="hero-index"><span>01</span> A LITTLE ABOUT MY WORK</p><h1 id="hero-title">I make useful<br />things for <em>complex</em><br /> problems<span className="hero-period">.</span></h1><p className="hero-summary">I’m Myolaoluwa, a product-minded developer building thoughtful software for web and mobile, from useful apps to focused digital experiences.</p><div className="hero-actions"><a className="button button-primary" href="#work">See what I build <ArrowDownRight size={17} /></a><a className="text-link" href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer"><CodeXml size={16} /> GitHub profile <ArrowUpRight size={13} /></a></div></div>
-      <div className="hero-art" aria-label="A preview of recent products"><div className="art-stamp">PRODUCT<br />THINKING<br /><span>×</span><br />WEB + APP</div><div className="hero-art-window"><div className="art-window-head"><span>WORK / IN PROGRESS</span><span className="live-mark"><i /> BUILDING</span></div><div className="hero-art-title">From signal<br />to <em>something</em><br />real.</div><div className="art-flow"><span>IDEA</span><i /><span>INTERFACE</span><i /><span>IMPACT</span></div><div className="art-side-note">A practice in<br />making the<br />complex feel<br />clear.</div><div className="art-shape shape-orange" /><div className="art-shape shape-lime" /><div className="art-grid-dot" /><span className="art-caption">A SMALL WINDOW INTO THE WORK <ArrowDownRight size={13} /></span></div><div className="art-orbit-label"><span>MYOLAOLUWA</span><b>O</b><span>PRODUCTS / 2026</span></div></div></div><div className="hero-bottomline"><span><ArrowDown size={14} /> SCROLL TO EXPLORE</span><span>WEB · MOBILE · PRODUCT</span><span>INDEPENDENT / ONLINE</span></div></section>
+    <CinematicIntro progress={cinemaProgress} activeScene={activeScene} onChapterSelect={jumpToChapter} />
 
     <section className="intro-band" aria-label="Introduction"><span className="section-index">01 / THE THROUGHLINE</span><p>Different problems. One instinct: <strong>make the next step clearer.</strong></p><span className="intro-mark">✳</span></section>
     <section className="featured-section" id="work" aria-labelledby="work-title"><div className="section-heading"><div><span className="section-index">02 / SELECTED WORK</span><h2 id="work-title">Built around<br /><em>real problems.</em></h2></div><p>A few products I’ve taken from an idea to a working experience. Each starts with a real workflow and asks how software can make it feel lighter.</p></div>

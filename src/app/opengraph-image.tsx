@@ -5,7 +5,7 @@ const logoMark = `data:image/svg+xml,${encodeURIComponent(
 )}`;
 
 export const alt =
-  "DelighTech by Myolaoluwa: thoughtful software for web, mobile, and everyday life.";
+  "DelighTech: thoughtful software for web, mobile, and everyday life.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -104,7 +104,7 @@ export default function OpenGraphImage() {
             }}
           >
             <span>01</span>
-            <span style={{ color: "#9eaa9f" }}>INDEPENDENT PRODUCT DEVELOPER</span>
+            <span style={{ color: "#9eaa9f" }}>CEO / OLAOLUWA MOSHOOD</span>
           </div>
           <div
             style={{
@@ -144,7 +144,7 @@ export default function OpenGraphImage() {
             }}
           >
             <span style={{ width: 35, height: 2, backgroundColor: "#ed684a" }} />
-            <span>MYOLAOLUWA</span>
+            <span>OLAOLUWA MOSHOOD</span>
           </div>
         </div>
         <div
@@ -270,7 +270,7 @@ export default function OpenGraphImage() {
             letterSpacing: 2,
           }}
         >
-          DELIGHTECH.DEV / 2026
+          DELIGHTECH.NET / 2026
         </div>
         <div
           style={{

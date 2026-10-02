@@ -8,7 +8,7 @@ function ElaraPreview() {
   return <div className="product-window elara-window" aria-label="Elara workspace interface preview">
     <div className="window-topbar"><div className="window-dots"><i /><i /><i /></div><span>elara / command center</span><span className="window-date">SAMPLE DATA</span></div>
     <div className="elara-layout"><aside className="elara-sidebar"><Image src="/elara-mark.svg" alt="" width={25} height={25} /><div className="side-active">⌂</div><span>▤</span><span>◷</span><span>✓</span><span>◎</span><span className="side-bottom">↗</span></aside>
-      <div className="elara-content"><div className="preview-greeting"><span>THURSDAY, OCTOBER 01</span><strong>Good morning, Myolaoluwa.</strong></div>
+      <div className="elara-content"><div className="preview-greeting"><span>THURSDAY, OCTOBER 01</span><strong>Good morning, Olaoluwa.</strong></div>
         <div className="briefing-strip"><span className="briefing-spark">✳</span><span>Your day, in focus</span><small>3 meetings · 2 follow-ups · 4 tasks</small><ArrowUpRight size={14} /></div>
         <div className="elara-columns"><div className="preview-panel"><div className="panel-heading"><strong>Today</strong><span>All events ↗</span></div>
           <div className="meeting-item"><b>09:30</b><span><strong>Product sync</strong><small>Studio room · 30 min</small></span><i className="meeting-dot" /></div><div className="meeting-item"><b>11:00</b><span><strong>Quarterly review</strong><small>Leadership team</small></span><i className="meeting-dot muted" /></div><div className="meeting-item"><b>14:15</b><span><strong>Partnership call</strong><small>Briefing ready</small></span><i className="meeting-dot muted" /></div>
@@ -67,7 +67,7 @@ const cinematicChapters = [
     marker: "01",
     eyebrow: "START WITH THE QUESTION",
     title: <>Good software begins with a <em>better question.</em></>,
-    description: "I’m Myolaoluwa. I turn the complicated parts of work and everyday life into products that feel clear, useful, and human.",
+    description: "DelighTech CEO Olaoluwa Moshood turns the complicated parts of work and everyday life into products that feel clear, useful, and human.",
     product: "DELIGHTECH",
     screenTitle: "A useful place to begin",
   },
@@ -144,7 +144,7 @@ function CinematicIntro({ progress, activeScene, onChapterSelect }: { progress: 
       <div className={`cinema-device-wrap cinema-device-wrap-${activeScene}`} key={`device-${activeScene}`}>
         <CinematicPhone scene={activeScene} />
       </div>
-      <div className="cinema-bottomline"><span>MYOLAOLUWA / INDEPENDENT PRODUCT DEVELOPER</span><span>{chapter.marker} — 05</span><button type="button" onClick={() => onChapterSelect(Math.min(activeScene + 1, cinematicChapters.length - 1))} disabled={activeScene === cinematicChapters.length - 1}><span>{activeScene === cinematicChapters.length - 1 ? "EXPLORE THE WORK" : "SCROLL TO CONTINUE"}</span><i><ArrowDown size={17} /></i></button></div>
+      <div className="cinema-bottomline"><span>DELIGHTECH / CEO: OLAOLUWA MOSHOOD</span><span>{chapter.marker} — 05</span><button type="button" onClick={() => onChapterSelect(Math.min(activeScene + 1, cinematicChapters.length - 1))} disabled={activeScene === cinematicChapters.length - 1}><span>{activeScene === cinematicChapters.length - 1 ? "EXPLORE THE WORK" : "SCROLL TO CONTINUE"}</span><i><ArrowDown size={17} /></i></button></div>
       <div className="cinema-track-progress" aria-hidden="true"><i style={{ height: `${progress * 100}%` }} /></div>
     </div>
   </section>;
@@ -203,6 +203,6 @@ export default function Home() {
     <section className="approach-section" id="approach" aria-labelledby="approach-title"><div className="approach-intro"><span className="section-index">04 / HOW I APPROACH IT</span><h2 id="approach-title">Thoughtful<br />from <em>first sketch</em><br />to first use.</h2><p>I like working across the whole product: understanding the job, shaping the interface, and making the details hold up in real use.</p></div><div className="approach-steps"><div className="approach-step"><span>01</span><div><h3>Find the friction</h3><p>Start with the real workflow, the people inside it, and the part that keeps getting in the way.</p></div><ArrowDownRight size={17} /></div><div className="approach-step"><span>02</span><div><h3>Shape the product</h3><p>Turn the messy middle into clear priorities, calm interfaces, and a useful first version.</p></div><ArrowDownRight size={17} /></div><div className="approach-step"><span>03</span><div><h3>Build for the edges</h3><p>Make the everyday path feel easy, and give errors, empty states, and sensitive actions the same care.</p></div><ArrowDownRight size={17} /></div></div></section>
     <section className="toolkit-strip" aria-label="Tools and technologies"><span className="section-index">WEB + APP DEVELOPMENT</span><div className="toolkit-list"><span>TypeScript</span><i /><span>React</span><i /><span>Next.js</span><i /><span>Expo</span><i /><span>React Native</span><i /><span>Python</span><i /><span>PostgreSQL</span><i /><span>Supabase</span></div></section>
     <section className="contact-section" id="contact" aria-labelledby="contact-title"><div className="contact-stamp">OPEN<br />SOURCE<br /><span>♥</span><br />OPEN MIND</div><div className="contact-content"><span className="section-index">05 / YOUR TURN</span><h2 id="contact-title">Have a useful<br />problem? <em>Let’s build.</em></h2><p>If you’re working on something that could make a real day a little easier, I’d like to hear about it.</p><a className="button button-dark" href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer">Find me on GitHub <ArrowUpRight size={16} /></a></div><div className="contact-mark">DT<span>.</span></div></section>
-    <footer className="site-footer"><a className="footer-brand" href="#top">DelighTech</a><span>Built with care by Myolaoluwa.</span><div><a href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13} /></a><a href="#top">Back to top <ArrowRight size={13} /></a></div><small>© 2026 DELIGHTECH</small></footer>
+    <footer className="site-footer"><a className="footer-brand" href="#top">DelighTech</a><span>CEO: Olaoluwa Moshood.</span><div><a href="https://github.com/myolaoluwa" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13} /></a><a href="#top">Back to top <ArrowRight size={13} /></a></div><small>© 2026 DELIGHTECH</small></footer>
   </main>;
 }

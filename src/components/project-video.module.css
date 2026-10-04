@@ -1,0 +1,40 @@
+.audioControls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  margin-top: 16px;
+}
+
+.soundButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #d0f766;
+  border-radius: 6px;
+  background: #d0f766;
+  color: #18211d;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.soundButton[aria-pressed="false"] {
+  background: transparent;
+  color: #d0f766;
+}
+
+.soundButton:focus-visible {
+  outline: 2px solid #f4f5ee;
+  outline-offset: 4px;
+}
+
+.audioNote {
+  flex: 1 1 220px;
+  color: #c1c9bf;
+  font-size: 12px;
+  line-height: 1.7;
+}

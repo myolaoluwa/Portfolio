@@ -1,0 +1,52 @@
+.panel {
+  position: fixed;
+  z-index: 100;
+  bottom: 16px;
+  left: 16px;
+  width: min(440px, calc(100vw - 32px));
+  padding: 20px;
+  background: #f1f3ec;
+  color: #18211d;
+  border: 1px solid #4f5d52;
+  box-shadow: 0 8px 32px #18211d30;
+  font: 13px/1.6 var(--sans);
+}
+.panel p {
+  margin: 0 0 14px;
+}
+.noticeLink {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #91402d;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.noticeLink:focus-visible {
+  outline: 3px solid #b5412b;
+  outline-offset: 3px;
+}
+.panel div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.panel button,
+.preferences {
+  cursor: pointer;
+  font: 12px var(--sans);
+  padding: 10px 14px;
+  background: #18211d;
+  color: #fafbf7;
+  border: 1px solid #4f5d52;
+}
+.preferences {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  z-index: 90;
+}
+.panel button:focus-visible,
+.preferences:focus-visible {
+  outline: 3px solid #b5412b;
+  outline-offset: 3px;
+}

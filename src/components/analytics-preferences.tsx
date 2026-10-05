@@ -40,14 +40,15 @@ export function AnalyticsPreferences() {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting || seen.has(entry.target.id)) continue;
-          seen.add(entry.target.id);
+          const sectionId = (entry.target as HTMLElement).dataset.analyticsSection || entry.target.id;
+          if (!entry.isIntersecting || seen.has(sectionId)) continue;
+          seen.add(sectionId);
           const event = {
             work: "projects_view",
             services: "services_view",
             contact: "contact_view",
           } as const;
-          const name = event[entry.target.id as keyof typeof event];
+          const name = event[sectionId as keyof typeof event];
           if (name) trackEvent(name);
         }
       },
@@ -55,7 +56,15 @@ export function AnalyticsPreferences() {
     );
     for (const id of ["work", "services", "contact"]) {
       const section = document.getElementById(id);
-      if (section) observer.observe(section);
+      // Observe the heading: a tall multi-project section may never reach
+      // the intersection threshold when observed as one large rectangle.
+      if (section) {
+        const heading = section.querySelector("h2");
+        if (heading) {
+          heading.dataset.analyticsSection = id;
+          observer.observe(heading);
+        } else observer.observe(section);
+      }
     }
     const click = (event: MouseEvent) => {
       const anchor = (event.target as Element)?.closest?.("a[href]");

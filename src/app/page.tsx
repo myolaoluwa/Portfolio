@@ -418,6 +418,31 @@ export default function Home() {
   const [activeScene, setActiveScene] = useState(0);
   const [portraitActive, setPortraitActive] = useState(false);
   const [cinemaVisible, setCinemaVisible] = useState(true);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const dismiss = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setMenuOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        menuRef.current?.focus();
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 701px)");
+    const resize = () => { if (desktop.matches) setMenuOpen(false); };
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    desktop.addEventListener("change", resize);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", escape);
+      desktop.removeEventListener("change", resize);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     let frame = 0;
@@ -483,8 +508,11 @@ export default function Home() {
 
   return (
     <main className="portfolio-shell" id="top">
+      <a className="keyboard-skip" href="#work">Skip to selected work</a>
+      {activeScene > 0 && <h1 className="sr-only">DelighTech — web and mobile software studio</h1>}
       <div className="reading-progress" aria-hidden="true" />
       <header
+        ref={headerRef}
         className={`site-header ${cinemaVisible ? "site-header-cinema" : ""}`}
       >
         <a
@@ -495,15 +523,18 @@ export default function Home() {
           DelighTech
         </a>
         <button
+          ref={menuRef}
           className="menu-toggle"
           type="button"
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={menuOpen}
+          aria-controls="main-navigation"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
         <nav
+          id="main-navigation"
           className={menuOpen ? "main-nav is-open" : "main-nav"}
           aria-label="Main navigation"
         >
@@ -621,7 +652,7 @@ export default function Home() {
               <DeferredDashboard project="elara" />
             </details>
           </div>
-          <span className="feature-index-ghost">01</span>
+          <span className="feature-index-ghost" aria-hidden="true">01</span>
         </article>
         <article className="featured-project oracle-project">
           <div className="feature-visual">
@@ -665,10 +696,8 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <span className="feature-index-ghost">02</span>
+          <span className="feature-index-ghost" aria-hidden="true">02</span>
         </article>
-      </section>
-
       <article className="featured-project cashflow-project">
         <div className="feature-copy">
           <div className="project-kicker">
@@ -716,7 +745,7 @@ export default function Home() {
         <div className="feature-visual">
           <DeferredDashboard project="cashflow" />
         </div>
-        <span className="feature-index-ghost">03</span>
+        <span className="feature-index-ghost" aria-hidden="true">03</span>
       </article>
       <article className="featured-project nomi-project">
         <div className="feature-visual">
@@ -771,7 +800,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-        <span className="feature-index-ghost">04</span>
+        <span className="feature-index-ghost" aria-hidden="true">04</span>
       </article>
       <article className="featured-project bizflow-project">
         <div className="feature-copy">
@@ -816,8 +845,10 @@ export default function Home() {
         <div className="feature-visual">
           <DeferredDashboard project="bizflow" />
         </div>
-        <span className="feature-index-ghost">05</span>
+        <span className="feature-index-ghost" aria-hidden="true">05</span>
       </article>
+
+      </section>
 
       <Services />
 
@@ -927,7 +958,7 @@ export default function Home() {
         id="contact"
         aria-labelledby="contact-title"
       >
-        <div className="contact-stamp">
+        <div className="contact-stamp" aria-hidden="true">
           OPEN
           <br />
           SOURCE
@@ -949,11 +980,9 @@ export default function Home() {
           </p>
           <a
             className="button button-dark"
-            href="https://github.com/myolaoluwa"
-            target="_blank"
-            rel="noreferrer"
+            href="mailto:hello@delightech.net"
           >
-            Explore project code <ArrowUpRight size={16} />
+            Tell us about your project <ArrowUpRight size={16} />
           </a>
         </div>
         <ContactPanel />

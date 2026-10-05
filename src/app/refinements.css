@@ -526,7 +526,8 @@ summary {
   font-size: 12px;
   line-height: 1.5;
 }
-.contact-details button {
+.contact-details button,
+.contact-details a {
   width: 100%;
   padding: 0;
   display: flex;
@@ -539,9 +540,32 @@ summary {
   text-align: left;
   opacity: 0.7;
 }
-.contact-details button svg {
+.contact-details button svg,
+.contact-details a svg {
   flex-shrink: 0;
   color: var(--lime);
+}
+.contact-details a {
+  min-height: 44px;
+  opacity: 1;
+  overflow-wrap: anywhere;
+}
+.contact-details a:hover { color: var(--lime); }
+
+.keyboard-skip {
+  position: fixed;
+  top: 8px;
+  left: 12px;
+  z-index: 150;
+  padding: 12px 18px;
+  background: var(--bright);
+  color: var(--ink);
+  transform: translateY(-160%);
+}
+.keyboard-skip:focus { transform: translateY(0); }
+
+@media (max-width: 700px) {
+  .menu-toggle { min-width: 44px; min-height: 44px; }
 }
 .contact-panel-note {
   margin: 14px 0 0;
@@ -798,6 +822,18 @@ summary {
   }
 }
 /* Paint the first message immediately; portrait/chapter entrances retain motion. */
+/* Compact the stage on landscape phones without changing chapter scrolling. */
+@media (max-height: 500px) and (min-width: 701px) {
+  .cinema-copy { top: 115px; transform: none; }
+  .cinema-copy h1, .cinema-copy h2 { font-size: 28px; }
+  .cinema-eyebrow { margin-bottom: 8px; }
+  .cinema-description { font-size: 11px; line-height: 1.5; margin-top: 10px; }
+  .cinema-work-link { min-height: 36px; margin-top: 10px; }
+  .cinema-phone { width: 110px; }
+  .cinema-device-wrap { top: 122px; transform: none; }
+  .cinema-topline { display: none; }
+  .cinema-bottomline { bottom: 12px; }
+}
 .cinema-opening-copy { animation: none; }
 
 /* Retain the coral accent; deepen text on the light surfaces for contrast. */
@@ -819,12 +855,28 @@ summary {
 }
 .status-chip { color: #4e5e39; }
 .status-prototype { color: #4f5d52; }
+.feature-index-ghost { color: #6b7663; }
+.oracle-project .feature-index-ghost { color: #82917b; }
+.contact-stamp { color: var(--ink); opacity: 1; }
+.contact-stamp span { color: var(--ink); }
 .oracle-project .status-prototype { color: #a2aeb2; }
 .oracle-project .project-kicker > span:first-child { color: #ed927b; }
 .contact-content .section-index,
 .contact-content > p { color: #18211d; }
 .contact-mark,
 .contact-mark span { color: #18211d; }
+
+@media (max-height: 500px) and (max-width: 700px) and (orientation: landscape) {
+  .cinema-stage { min-height: 100svh; }
+  .cinema-copy { top: 106px; width: 64vw; right: auto; }
+  .cinema-copy h1, .cinema-copy h2 { font-size: 26px; max-width: none; }
+  .cinema-eyebrow { margin-bottom: 8px; }
+  .cinema-description { max-width: 46ch; margin-top: 8px; line-height: 1.4; }
+  .cinema-work-link { min-height: 34px; margin-top: 8px; }
+  .cinema-phone { width: 84px; }
+  .cinema-rail { display: none; }
+  .cinema-bottomline { bottom: 8px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {

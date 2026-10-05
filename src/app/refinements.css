@@ -549,6 +549,9 @@ summary {
   min-height: 44px;
   opacity: 1;
   overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
 }
 .contact-details a:hover { color: var(--lime); }
 

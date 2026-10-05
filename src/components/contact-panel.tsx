@@ -39,22 +39,23 @@ export function ContactPanel() {
           <dd>To be confirmed</dd>
         </div>
         <div>
-          <dt>Time zone</dt>
-          <dd>Nigeria · WAT (UTC+01:00)</dd>
-        </div>
-        <div>
           <dt>Booking</dt>
           <dd>
-            <button type="button" disabled>
-              Booking link coming soon{" "}
+            <a
+              href="https://calendly.com/hello-delightech/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Book a discovery call (opens in a new tab)"
+            >
+              Book a discovery call{" "}
               <ArrowUpRight size={16} aria-hidden="true" />
-            </button>
+            </a>
           </dd>
         </div>
       </dl>
       <p className="contact-panel-note">
-        Email us about your project. LinkedIn, résumé, and booking details will
-        be added when available.
+        Email us about your project or book a discovery call. LinkedIn and
+        résumé details will be added when available.
       </p>
     </aside>
   );

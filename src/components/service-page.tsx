@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { serviceOffers, type ServiceOffer } from "@/lib/services";
 import { BreadcrumbData } from "./structured-data";
+import { InsightsLinks } from "./insights-links";
 import styles from "./service-page.module.css";
 
 export function ServicePage({ service }: { service: ServiceOffer }) {
@@ -24,6 +25,7 @@ export function ServicePage({ service }: { service: ServiceOffer }) {
       <aside className={styles.boundary} aria-labelledby="boundary-title"><h2 id="boundary-title">Important boundaries.</h2><p>{service.boundary}</p></aside>
       <section className={styles.section} aria-labelledby="questions-title"><h2 id="questions-title">Questions before we begin.</h2>{service.questions.map(item=><details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}<Link className={styles.inlineLink} href="/#engagement">Read about proposals, milestones and handover <ArrowRight size={16} aria-hidden="true" /></Link></section>
       <section className={styles.close} aria-labelledby="next-title"><span className={styles.eyebrow}>START WITH THE PROBLEM</span><h2 id="next-title">Tell us what needs to work better.</h2><p>Discuss what you’re building, who it’s for and any constraints. We’ll use that conversation to identify possible next steps—not assume a solution before understanding the brief.</p><div className={styles.actions}><a className={styles.primary} href="https://calendly.com/hello-delightech/30min" target="_blank" rel="noopener noreferrer">Book a discovery call <ArrowUpRight size={17} aria-hidden="true" /></a><a href="mailto:hello@delightech.net">Email our team <ArrowUpRight size={17} aria-hidden="true" /></a></div></section>
+      <InsightsLinks relatedTo={`/services/${service.slug}`} />
       <nav className={styles.related} aria-label="Other services">{serviceOffers.filter(item=>item.slug!==service.slug).map(item=><Link key={item.slug} href={`/services/${item.slug}`}>{item.title} <ArrowRight size={16} aria-hidden="true" /></Link>)}</nav>
     </main><footer className={styles.footer}><span>© 2026 DelighTech · Olaoluwa Moshood, CEO</span><Link href="/privacy">Privacy notice</Link></footer>
   </div>;

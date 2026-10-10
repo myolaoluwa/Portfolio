@@ -1,4 +1,11 @@
 export const analyticsChoiceKey = "delightech.analytics-choice";
+// Keep this small allowlist aligned with published content; never ship article
+// bodies in the analytics client bundle or collect arbitrary draft paths.
+export const analyticsInsightPaths = [
+  "/insights/how-to-scope-a-web-application",
+  "/insights/responsive-website-or-mobile-app",
+  "/insights/prepare-for-software-discovery-call",
+];
 export type AnalyticsEvent =
   | "page_view"
   | "projects_view"
@@ -69,7 +76,8 @@ export function trackEvent(name: AnalyticsEvent, project?: string) {
   }
   // Only known portfolio paths and project names are ever sent.
   const path = window.location.pathname;
-  if (!/^\/(?:work\/(?:elara|cashflow|oracle|nomi)\/?|services\/(?:business-websites|web-applications|mobile-apps|ongoing-improvements)\/?)?$/.test(path)) return;
+  const normalized = path.replace(/\/$/, "");
+  if (!/^\/(?:work\/(?:elara|cashflow|oracle|nomi)\/?|services\/(?:business-websites|web-applications|mobile-apps|ongoing-improvements)\/?)?$/.test(path) && normalized !== "/insights" && !analyticsInsightPaths.includes(normalized)) return;
   const data =
     project && /^(elara|cashflow|oracle|nomi|bizflow)$/.test(project)
       ? { project }

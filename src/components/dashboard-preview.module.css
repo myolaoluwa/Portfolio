@@ -417,6 +417,9 @@
 .cashflow {
   --accent: #176b45;
 }
+.cashflow .app {
+  grid-template-columns: 168px minmax(0, 1fr);
+}
 .cashflow .sidebar {
   background: #12221a;
   color: #e7efe9;
@@ -428,13 +431,33 @@
 }
 .cashflow .navigation > div {
   color: #c5d1c9;
+  font-size: 11px;
+  gap: 7px;
+  padding: 8px 5px;
+}
+.cashflow .navigation > div > span {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.cashflow .kicker,
+.cashflow .group,
+.cashflow .sidebarFoot {
+  font-size: 9px;
 }
 .cashflow .navigation .active {
   background: #244a36;
   color: #fff;
 }
 .cashflow .brand {
-  font-size: 12px;
+  font-size: 14px;
+  gap: 7px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.cashflow .brand img {
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
 }
 .booksLayout {
   display: grid;
@@ -588,6 +611,9 @@
   .sidebar {
     padding-inline: 7px;
   }
+  .cashflow .app {
+    grid-template-columns: 148px minmax(0, 1fr);
+  }
   .brand {
     font-size: 11px;
     gap: 4px;
@@ -634,7 +660,8 @@
   }
 }
 @container (max-width: 380px) {
-  .app {
+  .app,
+  .cashflow .app {
     grid-template-columns: minmax(0, 1fr);
   }
   .sidebar {

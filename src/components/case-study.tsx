@@ -17,6 +17,7 @@ import {
 } from "./studio-trust";
 import { BreadcrumbData } from "./structured-data";
 import { serviceOffers } from "@/lib/services";
+import { InsightsLinks } from "./insights-links";
 
 const sections = [
   ["overview", "Overview"],
@@ -272,6 +273,7 @@ export function CaseStudy({ study }: { study: Study }) {
             <Link href={`/services/${study.slug === "cashflow" ? serviceOffers[2].slug : serviceOffers[1].slug}`}>{study.slug === "cashflow" ? "Mobile app development" : "Web application development"} <ArrowRight size={16} aria-hidden="true" /></Link>
           </div>
         </section>
+        <InsightsLinks relatedTo={`/work/${study.slug}`} />
         <nav className={styles.nextProject} aria-label="More project stories">
           <div>
             <span className={styles.eyebrow}>CONTINUE EXPLORING</span>

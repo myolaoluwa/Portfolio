@@ -5,7 +5,7 @@ export const serviceOffers = [
     slug: "business-websites", number: "01", title: "Business websites",
     benefit: "Give potential customers a clear picture of your business and a straightforward way to take the next step.",
     deliverable: "A responsive website with a considered page structure, clear service messaging, and enquiry or booking integrations suited to your business.",
-    heading: "A business website that makes the next step clear.",
+    heading: "Business websites designed for a clearer next step.",
     description: "Business website design and development from DelighTech: clear service messaging, responsive interfaces, enquiry paths and a considered launch plan.",
     fit: "For businesses that need to explain their offer, show credible work, and make it easy for prospective customers to enquire. A brochure site, portfolio or service website should help visitors make a decision—not ask them to decode a technology stack.",
     decisions: ["Start with the visitor’s questions: what you do, who it’s for, and how to begin.", "Choose a page structure around real services and useful evidence, rather than creating duplicate pages for every country.", "Balance visual character with readable content, usable navigation and performance on mobile connections."],
@@ -19,7 +19,7 @@ export const serviceOffers = [
     slug: "web-applications", number: "02", title: "Web applications",
     benefit: "Turn a product idea or a repetitive business workflow into software people can actually use.",
     deliverable: "A working web application with the screens, accounts, data, dashboards, and integrations your agreed scope needs—not just a visual prototype.",
-    heading: "Turn a business workflow into a useful product.",
+    heading: "Custom web applications built around your business.",
     description: "DelighTech builds web applications around real workflows: dashboards, accounts, connected data and scoped integrations, from product decisions to launch.",
     fit: "For teams building a new product or replacing a workflow spread across spreadsheets, messages and separate tools. We start with what a user needs to accomplish, then connect the interface to the data and permissions that make the task possible.",
     decisions: ["Define a useful first version around a complete workflow, rather than a long feature list.", "Separate what users can see from what they are allowed to change; access rules belong in the implementation, not just the interface.", "Make loading, empty states, failures and third-party dependencies part of the product design."],
@@ -33,7 +33,7 @@ export const serviceOffers = [
     slug: "mobile-apps", number: "03", title: "Mobile apps",
     benefit: "Make your product’s key tasks convenient to complete on a phone, wherever your users are.",
     deliverable: "Mobile-first interfaces and connected app workflows, including Android app delivery where appropriate. Target platforms and release requirements are agreed up front.",
-    heading: "Make your product’s everyday tasks work on a phone.",
+    heading: "Mobile app development for everyday workflows.",
     description: "Mobile app development from DelighTech: mobile-first workflows, connected interfaces and Android delivery where appropriate, with platform requirements scoped up front.",
     fit: "For businesses whose users need to record, review or act on information away from a desk. A mobile app should make the key task convenient; it should not simply squeeze a desktop dashboard into a smaller screen.",
     decisions: ["Choose the target platform and delivery approach around the product’s needs, including any device capabilities.", "Prioritise touch targets, readable hierarchy and the sequence of actions on a small screen.", "Define connectivity assumptions, permissions and release requirements before promising device-specific behaviour."],
@@ -47,7 +47,7 @@ export const serviceOffers = [
     slug: "ongoing-improvements", number: "04", title: "Ongoing improvements",
     benefit: "Keep a useful product moving forward without starting again from scratch.",
     deliverable: "A review of your existing website or app, followed by scoped fixes, interface refinements, performance improvements, or new features, with checks before handover.",
-    heading: "Improve what works. Fix what gets in the way.",
+    heading: "Website and app improvements, without starting over.",
     description: "Website and app improvements from DelighTech: scoped interface fixes, performance investigation, feature work and regression checks without an unnecessary rebuild.",
     fit: "For teams with an existing product that needs clearer interfaces, fewer frustrating interactions or a better next version. We inspect the current implementation before deciding what to change, preserving useful functionality and separating urgent fixes from longer-term improvements.",
     decisions: ["Reproduce the problem and establish a baseline before proposing a fix.", "Prioritise changes by user impact, implementation risk and dependency—not by how dramatic a redesign looks.", "Verify important existing journeys after changes, and record remaining limits rather than calling a product perfect."],
@@ -62,7 +62,13 @@ export const serviceOffers = [
 export type ServiceOffer = (typeof serviceOffers)[number];
 
 export function serviceMetadata(service: ServiceOffer): Metadata {
-  const title = `${service.title} — DelighTech`;
+  const titles = {
+    "business-websites": "Business Website Design & Development",
+    "web-applications": "Custom Web Application Development",
+    "mobile-apps": "Mobile App Development Services",
+    "ongoing-improvements": "Website & App Improvements",
+  };
+  const title = `${titles[service.slug]} — DelighTech`;
   const url = `/services/${service.slug}`;
   return {
     title, description: service.description, alternates: { canonical: url },

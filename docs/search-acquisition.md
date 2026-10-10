@@ -63,4 +63,4 @@ Avoid an empty blog or bulk generated SEO posts. The following articles can be w
 - Link business websites and ongoing improvements.
 - Do not present the current city opening as the original tree brief or claim documented conversion gains.
 
-Publishing these pieces is a separate content-review step. No blog routes or unsupported article schema were added in this phase.
+The original Phase 4 record above describes that phase's state. The later SEO release implements `/insights`, three reviewed guides, relevant internal links and factual Article/Breadcrumb schema. See [implementation status](seo-roadmap.md#implementation-status--october-10-2026) and [publishing workflow](insights-publishing.md). Private Search Console demand/ranking data and genuine outcome metrics remain pending; no ranking gains are claimed.

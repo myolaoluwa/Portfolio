@@ -44,3 +44,6 @@
 .footer { border-top: 1px solid #cbd3c8; color: #515e55; font-size: 12px; flex-wrap: wrap; }
 .footer a { min-height: 44px; display: inline-flex; align-items: center; }
 @media (max-width:700px) { .header, .footer { padding: 18px 22px; } .header { gap: 12px; } .brand { font-size: 22px; gap: 8px; } .brand::before { width: 24px; height: 24px; } .header a:last-child { font-size: 12px; } .main { padding: 0 22px; } .hero { padding: 30px 0 40px; } .hero > p { font-size: 17px; } .split { grid-template-columns: minmax(0,1fr); gap: 10px; padding: 36px 0; } .section { padding: 36px 0; } .cards { grid-template-columns: minmax(0,1fr); } .cards li, .proof article { padding: 22px; } .boundary { padding: 22px; } }
+.insights h2 { margin: 12px 0 20px; font: 500 clamp(28px, 3.2vw, 42px)/1.15 var(--display), sans-serif; letter-spacing: -.03em; }
+.insights p { font-size: 16px; line-height: 1.8; color: #515e55; }
+.insights a:focus-visible { outline: 3px solid #a94028; outline-offset: 5px; }

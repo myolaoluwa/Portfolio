@@ -145,3 +145,22 @@ test("invalid collectors stay disabled and failures do not break navigation", as
   assert.doesNotThrow(() => f.api.trackEvent("page_view"));
   await new Promise((resolve) => setImmediate(resolve));
 });
+
+test("Insights measurement requires consent and excludes drafts or unknown articles", () => {
+  const f = fixture();
+  f.configure();
+  f.context.window.location.pathname = "/insights";
+  f.api.trackEvent("page_view");
+  assert.equal(f.requests.length, 0);
+  f.storage.set(f.api.analyticsChoiceKey, "granted");
+  for (const path of ["/insights", ...f.api.analyticsInsightPaths]) {
+    f.context.window.location.pathname = path;
+    f.api.trackEvent("page_view");
+  }
+  assert.equal(f.requests.length, 4);
+  for (const path of ["/insights/draft-studio-note", "/insights/private/client", "/privacy"]) {
+    f.context.window.location.pathname = path;
+    f.api.trackEvent("page_view");
+  }
+  assert.equal(f.requests.length, 4);
+});

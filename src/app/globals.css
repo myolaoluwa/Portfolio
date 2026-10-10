@@ -4291,3 +4291,12 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+.studio-insights-section {
+  padding: 0 clamp(22px, 4vw, 60px);
+  background: #f1f3ec;
+  color: #18211d;
+}
+.studio-insights-section > section {
+  max-width: 1152px;
+  margin-inline: auto;
+}

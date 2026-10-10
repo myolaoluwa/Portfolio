@@ -12,6 +12,8 @@
     "test:landing": "node tests/landing-audit.cjs",
     "test:services": "node tests/services-audit.cjs",
     "test:usability": "node tests/usability-audit.cjs",
+    "test:insights": "node tests/insights-audit.cjs",
+    "test:cashflow": "node tests/cashflow-preview-audit.cjs",
     "test:production": "node tests/production-check.cjs"
   },
   "dependencies": {

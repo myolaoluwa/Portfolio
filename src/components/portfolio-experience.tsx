@@ -418,9 +418,10 @@ const capabilityGroups = [
   },
 ];
 
-export default function PortfolioExperience({ services, engagement }: {
+export default function PortfolioExperience({ services, engagement, insights }: {
   services: ReactNode;
   engagement: ReactNode;
+  insights: ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeScene, setActiveScene] = useState(0);
@@ -555,6 +556,9 @@ export default function PortfolioExperience({ services, engagement }: {
           <a href="#engagement" onClick={() => setMenuOpen(false)}>
             Process
           </a>
+          <Link href="/insights" onClick={() => setMenuOpen(false)}>
+            Insights
+          </Link>
           <a
             className="nav-contact"
             href="#contact"
@@ -960,6 +964,7 @@ export default function PortfolioExperience({ services, engagement }: {
         </div>
       </section>
       {engagement}
+      <div className="studio-insights-section">{insights}</div>
 
       <section
         className="contact-section"

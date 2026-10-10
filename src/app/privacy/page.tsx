@@ -92,7 +92,8 @@ export default function PrivacyPage() {
             email links and the Calendly booking link. A contact or booking-link
             click is not evidence that an enquiry was sent or a meeting booked.
             Known page visits include the homepage, project stories and service
-            pages; the privacy notice itself is excluded from collection.
+            pages, the Insights hub and published articles; the privacy notice
+            itself is excluded from collection.
           </p>
           <p>
             We do not include query strings, URL fragments, referrers, form

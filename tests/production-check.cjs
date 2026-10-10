@@ -26,6 +26,11 @@ const base = process.env.BASE_URL || `http://127.0.0.1:${port}`;
       assert.ok(ready, `Production server did not start: ${output}`);
     }
     const paths = ['/', '/privacy', '/work/elara', '/work/cashflow', '/work/oracle', '/work/nomi', '/services/business-websites', '/services/web-applications', '/services/mobile-apps', '/services/ongoing-improvements'];
+    const insightsResponse = await fetch(new URL('/insights', base));
+    assert.equal(insightsResponse.status, 200);
+    const insightsHtml = await insightsResponse.text();
+    const publishedArticlePaths = [...new Set([...insightsHtml.matchAll(/href="(\/insights\/[a-z0-9-]+)"/g)].map(match => match[1]))];
+    if (publishedArticlePaths.length) paths.push('/insights', ...publishedArticlePaths);
     const titles = new Set();
     const descriptions = new Set();
     let canonicalOrigin;
@@ -65,6 +70,7 @@ const base = process.env.BASE_URL || `http://127.0.0.1:${port}`;
       assert.equal(organization?.name, 'DelighTech');
       assert.equal(organization?.url, `${canonicalOrigin}/`);
       assert.equal(organization?.email, 'hello@delightech.net');
+      assert.equal(organization?.logo, `${canonicalOrigin}/delightech-logo.png`);
       for (const schema of schemas) {
         assert.equal(schema['@context'], 'https://schema.org');
         assert.equal(schema.aggregateRating, undefined);
@@ -77,6 +83,17 @@ const base = process.env.BASE_URL || `http://127.0.0.1:${port}`;
         assert.equal(crumbs[0].item, `${canonicalOrigin}/`);
         assert.equal(crumbs[1].position, 2);
         assert.equal(crumbs[1].item, `${canonicalOrigin}${path}`);
+      }
+      if (path.startsWith('/insights/')) {
+        const article = schemas.find(item => item['@type'] === 'Article');
+        assert.ok(article?.headline && article.datePublished);
+        assert.equal(article.mainEntityOfPage, canonical);
+        assert.equal(article.author.name, 'DelighTech');
+        assert.equal(article.author.url, `${canonicalOrigin}/`);
+        const crumbs = schemas.find(item => item['@type'] === 'BreadcrumbList')?.itemListElement;
+        assert.equal(crumbs?.length, 3);
+        assert.equal(crumbs[2].item, canonical);
+        assert.ok(html.includes('In this article'));
       }
       if (path.startsWith('/services/')) {
         assert.ok(html.includes('Book a discovery call'));
@@ -125,6 +142,15 @@ const base = process.env.BASE_URL || `http://127.0.0.1:${port}`;
     const missingResponse = await fetch(new URL('/not-a-real-page', base));
     assert.equal(missingResponse.status, 404);
     assert.match(await missingResponse.text(), /name="robots" content="noindex"/);
+    assert.ok(insightsHtml.includes(`rel="canonical" href="${canonicalOrigin}/insights"`));
+    // The hub deliberately stays out of search while only an editorial brief exists.
+    if (!publishedArticlePaths.length) assert.match(insightsHtml, /name="robots" content="noindex/);
+    for (const slug of ['how-to-scope-a-web-application', 'not-a-real-article']) {
+      if (publishedArticlePaths.includes(`/insights/${slug}`)) continue;
+      const draft = await fetch(new URL(`/insights/${slug}`, base));
+      assert.equal(draft.status, 404);
+    }
+    console.log('PASS Insights hub, empty-hub noindex and unpublished/unknown article 404s');
     console.log('PASS robots, sitemap and true 404 handling');
   } finally {
     if (server && !serverExited) {

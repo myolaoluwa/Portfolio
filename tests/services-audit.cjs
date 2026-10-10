@@ -39,7 +39,7 @@ const slugs = ['business-websites', 'web-applications', 'mobile-apps', 'ongoing-
     }
     const page = await browser.newPage({ javaScriptEnabled: false });
     await page.goto(`${base}/services/web-applications`);
-    assert.match(await page.locator('main').innerText(), /Turn a business workflow into a useful product/);
+    assert.match(await page.locator('main').innerText(), /Custom web applications built around your business/);
     console.log('PASS readable service content without JavaScript');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

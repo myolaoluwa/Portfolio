@@ -33,6 +33,10 @@ export function DeferredDashboard({ project }: { project: ProjectId }) {
   const frame = useRef<HTMLDivElement>(null);
   const [nearby, setNearby] = useState(false);
   useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") {
+      const frameId = requestAnimationFrame(() => setNearby(true));
+      return () => cancelAnimationFrame(frameId);
+    }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;

@@ -47,15 +47,17 @@ export function ProjectVideo({
       }
     };
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) stop();
-    });
-    if (card.current) observer.observe(card.current);
+    const observer = typeof IntersectionObserver === "undefined"
+      ? null
+      : new IntersectionObserver(([entry]) => {
+          if (!entry.isIntersecting) stop();
+        });
+    if (card.current) observer?.observe(card.current);
     window.addEventListener("portfolio:video-start", stop);
     document.addEventListener("visibilitychange", visibility);
     motion.addEventListener("change", stop);
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
       window.removeEventListener("portfolio:video-start", stop);
       document.removeEventListener("visibilitychange", visibility);
       motion.removeEventListener("change", stop);
@@ -219,7 +221,7 @@ export function ProjectVideo({
             }}
             aria-label={`${title} full project showcase`}
           />
-          <p id={`${project}-film-description`}>
+          <p id={`${project}-film-description`} role="status">
             {failed
               ? "The video could not load. Please close the preview and try again."
               : description}
@@ -240,7 +242,7 @@ export function ProjectVideo({
               )}
               {soundOn ? "Sound on" : "Enable sound"}
             </button>
-            <span className={styles.audioNote}>
+            <span className={styles.audioNote} role="status">
               {playbackBlocked
                 ? "Press Play in the player to begin."
                 : soundOn

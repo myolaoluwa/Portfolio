@@ -9,6 +9,7 @@ import "./globals.css";
 import "./refinements.css";
 import { indexingEnabled, siteUrl } from "@/lib/site-config";
 import { AnalyticsPreferences } from "@/components/analytics-preferences";
+import { OrganizationData } from "@/components/structured-data";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -55,7 +56,6 @@ export const metadata: Metadata = {
     "mobile product",
     "Next.js",
     "Capacitor",
-    "Nigeria",
   ],
   icons: {
     icon: "/delightech-mark.svg",
@@ -99,7 +99,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable} ${serif.variable}`}
     >
-      <body>{children}<AnalyticsPreferences /></body>
+      <body><OrganizationData />{children}<AnalyticsPreferences /></body>
     </html>
   );
 }

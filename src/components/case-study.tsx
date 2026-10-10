@@ -15,6 +15,8 @@ import {
   PlayStoreLink,
   ProjectContext,
 } from "./studio-trust";
+import { BreadcrumbData } from "./structured-data";
+import { serviceOffers } from "@/lib/services";
 
 const sections = [
   ["overview", "Overview"],
@@ -34,6 +36,7 @@ export function CaseStudy({ study }: { study: Study }) {
   const walkthrough = study.format === "walkthrough";
   return (
     <div className={styles.page}>
+      <BreadcrumbData name={`${study.name} ${walkthrough ? "walkthrough" : "case study"}`} path={`/work/${study.slug}`} />
       <a className={styles.skip} href="#case-main">
         Skip to {walkthrough ? "product walkthrough" : "case study"}
       </a>
@@ -47,6 +50,7 @@ export function CaseStudy({ study }: { study: Study }) {
         </Link>
       </header>
       <main id="case-main" className={styles.main}>
+        <nav className={styles.breadcrumb} aria-label="Breadcrumb"><Link href="/">DelighTech</Link><span aria-hidden="true">/</span><span aria-current="page">{study.name} {walkthrough ? "walkthrough" : "case study"}</span></nav>
         <section
           id="overview"
           className={styles.hero}
@@ -83,6 +87,7 @@ export function CaseStudy({ study }: { study: Study }) {
             )}
             <PlayStoreLink project={study.slug} />
           </div>
+          {study.liveUrl && <p className={styles.visualNote}>The live product may require sign-in. You can explore the interface and workflow below without an account.</p>}
           <dl className={styles.facts}>
             <div>
               <dt>Built for</dt>
@@ -256,6 +261,17 @@ export function CaseStudy({ study }: { study: Study }) {
             </a>
           )}
         </aside>
+        <section className={styles.enquiry} aria-labelledby="enquiry-title">
+          <span className={styles.eyebrow}>YOUR NEXT PRODUCT / DELIGHTECH</span>
+          <h2 id="enquiry-title">Have a similar challenge?</h2>
+          <p>Tell our team what you’re building, who it’s for, and where you need help. A discovery call is a place to discuss your goals, scope, and possible next steps.</p>
+          <div className={styles.actions}>
+            <a className={styles.primary} href="https://calendly.com/hello-delightech/30min" target="_blank" rel="noopener noreferrer">Book a discovery call <ArrowUpRight size={17} aria-hidden="true" /></a>
+            <a href="mailto:hello@delightech.net">Email our team <ArrowUpRight size={16} aria-hidden="true" /></a>
+            <Link href="/#services">How we can help <ArrowRight size={16} aria-hidden="true" /></Link>
+            <Link href={`/services/${study.slug === "cashflow" ? serviceOffers[2].slug : serviceOffers[1].slug}`}>{study.slug === "cashflow" ? "Mobile app development" : "Web application development"} <ArrowRight size={16} aria-hidden="true" /></Link>
+          </div>
+        </section>
         <nav className={styles.nextProject} aria-label="More project stories">
           <div>
             <span className={styles.eyebrow}>CONTINUE EXPLORING</span>

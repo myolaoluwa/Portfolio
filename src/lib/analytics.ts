@@ -6,7 +6,21 @@ export type AnalyticsEvent =
   | "contact_view"
   | "project_open"
   | "contact_click"
+  | "booking_click"
   | "video_play";
+
+// Classify only approved destinations. No address, destination URL, or booking
+// form content is included in the measurement payload.
+export function analyticsLinkEvent(href: string):
+  | { name: AnalyticsEvent; project?: string }
+  | null {
+  const project = /^\/work\/(elara|cashflow|oracle|nomi)\/?$/.exec(href)?.[1];
+  if (project) return { name: "project_open", project };
+  if (href.startsWith("mailto:")) return { name: "contact_click" };
+  if (href === "https://calendly.com/hello-delightech/30min")
+    return { name: "booking_click" };
+  return null;
+}
 
 // Optional Umami-compatible collector. No script, cookies, or visitor ID.
 export function analyticsConfiguration() {
@@ -55,7 +69,7 @@ export function trackEvent(name: AnalyticsEvent, project?: string) {
   }
   // Only known portfolio paths and project names are ever sent.
   const path = window.location.pathname;
-  if (!/^\/(?:work\/(?:elara|cashflow|oracle|nomi)\/?)?$/.test(path)) return;
+  if (!/^\/(?:work\/(?:elara|cashflow|oracle|nomi)\/?|services\/(?:business-websites|web-applications|mobile-apps|ongoing-improvements)\/?)?$/.test(path)) return;
   const data =
     project && /^(elara|cashflow|oracle|nomi|bizflow)$/.test(project)
       ? { project }

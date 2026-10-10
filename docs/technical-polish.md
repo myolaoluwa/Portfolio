@@ -13,16 +13,16 @@ Cashflow's inspected implementation is Next.js/TypeScript/Prisma/PostgreSQL with
 Olaoluwa confirmed `https://delightech.net` as the production domain.
 
 - `/robots.txt` and `/sitemap.xml` are native metadata routes.
-- The sitemap lists the homepage and all four existing case-study/walkthrough routes. It does not invent modification dates.
-- Production indexing is enabled by default. Set `SITE_INDEXING_ENABLED=false` **at build time** for publicly hosted staging or preview builds. This changes both the robots file and page metadata; it is not authentication or a privacy guarantee.
+- The sitemap lists the homepage, privacy notice, four case-study/walkthrough routes and four service pages (ten URLs after Phase 4). It does not invent modification dates.
+- Production indexing is enabled by default. Vercel preview/development builds automatically use noindex; set `SITE_INDEXING_ENABLED=false` **at build time** for other publicly hosted staging builds. This changes both the robots file and page metadata; it is not authentication or a privacy guarantee.
 - `SITE_URL` optionally overrides the confirmed domain and must be an HTTPS origin. Never launch with a temporary preview origin in canonical metadata.
 - After approval/deployment, check the live endpoints and submit the sitemap in your search console. Local lab SEO scores do not establish search visibility.
 
 ## Optional analytics — configuration-dependent
 
-Olaoluwa configured Umami Cloud locally and confirmed that events arrive. The values are in ignored `.env.local`, so fresh clones and hosting builds remain unconfigured until their environment variables are supplied. An unconfigured build makes no analytics collection requests. No analytics SDK or remote tracker script is installed. Email, booking, and enquiry placeholders remain disabled; no actual enquiry-submission conversion is claimed.
+Olaoluwa configured Umami Cloud locally and confirmed that events arrive. The values are in ignored `.env.local`, so fresh clones and hosting builds remain unconfigured until their environment variables are supplied. An unconfigured build makes no analytics collection requests. No analytics SDK or remote tracker script is installed. Email and Calendly booking links are now available; their clicks measure intent, not delivered enquiries or completed bookings.
 
-The optional adapter speaks the documented Umami `/api/send` event format: https://docs.umami.is/docs/api/sending-stats. You can choose Umami (hosted or self-hosted), or replace the adapter if you choose another service. Choosing a provider is still outstanding.
+The optional adapter speaks the documented Umami `/api/send` event format: https://docs.umami.is/docs/api/sending-stats. The confirmed provider is Umami Cloud Hobby, US hosting region, with six-month analytics retention. These account details were supplied by the owner; no authenticated account inspection is claimed.
 
 To enable a compatible collector, copy the relevant blank fields from `.env.example` into your deployment configuration, configure these environment variables, and rebuild:
 
@@ -41,7 +41,8 @@ Events prepared:
 - `projects_view`, `services_view`, `contact_view`: a section enters the viewport once per route visit/consent session.
 - `project_open`: an existing case-study or walkthrough link is clicked.
 - `video_play`: an explicit full project video actually starts, once per opening; muted hover previews are excluded.
-- `contact_click`: an enabled email link is clicked, once a real address is configured. **This is intent, not a delivered enquiry.** Add a booking hook or actual form success event only when those flows exist.
+- `contact_click`: an enabled email link is clicked. **This is intent, not a delivered enquiry.**
+- `booking_click`: the approved Calendly discovery-call link is clicked. **This is intent, not a completed meeting booking.**
 
 Payloads contain only the event, known pathname, hostname, website configuration ID, and optionally a known project name. Query strings, fragments, form contents, email addresses, referrers, and visitor IDs are excluded. Requests omit credentials and referrers. The collector still receives ordinary network information, including IP address and user-agent headers; review its retention/settings and publish the appropriate privacy notice before activation. Consent UI is not a substitute for that review.
 
@@ -65,9 +66,9 @@ The `/privacy` route is linked from the homepage footer, every case-study footer
 
 Olaoluwa requested production indexing be enabled: `.env.local` now sets `SITE_INDEXING_ENABLED=true`. This enables both index/follow metadata and `Allow: /` in robots when rebuilt. `/sitemap.xml` includes `/privacy` alongside the homepage and four project routes, all under `https://delightech.net`. Set indexing false for externally hosted staging builds.
 
-Privacy contact remains pending at Olaoluwa’s request. The intended mailbox is `hello@delightech.net`; **do not publish it as a working address until it is registered and tested**. When ready, set `PRIVACY_CONTACT_EMAIL` in the hosting environment and rebuild. `.env.example` reserves the field, with no guessed address.
+On October 10, 2026, Olaoluwa approved the working `hello@delightech.net` mailbox for privacy enquiries and confirmed Umami Cloud Hobby, US region, and six-month analytics retention. The notice now publishes these facts and explains external Calendly booking. The former `PRIVACY_CONTACT_EMAIL` configuration is no longer needed; the approved address is public page content.
 
-Before approving public launch, confirm the Umami account region and retention period, the hosting/logging practices, the privacy mailbox, and the final notice wording. The notice deliberately marks missing contact/provider settings in the local preview. This is a factual draft for review, not a legal-compliance guarantee. These changes have not yet been deployed; publishing them on the live domain requires approval.
+Provider-specific hosting/log retention is not invented; analytics retention is explicitly distinguished from enquiries, bookings and hosting logs. The notice is factual information, not a legal-compliance guarantee. Deploying these updates still requires approval. See [the implementation roadmap](implementation-priorities.md) for the non-www hosting redirect and release checklist.
 
 Verification: production build, lint, and adapter tests pass. All six public routes render index/follow directives and confirmed-domain canonicals. Robots and sitemap return 200, with six sitemap URLs. The privacy page was checked at 320/390/768/1440px without overflow, with no WCAG A/AA axe violations, and with JavaScript disabled. Its consent panel stays collapsed while reading the notice; the privacy link and withdrawal controls were tested using a mocked collector, without sending test records to the real Umami account.
 

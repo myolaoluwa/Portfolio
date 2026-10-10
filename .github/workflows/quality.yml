@@ -1,0 +1,32 @@
+name: Portfolio quality checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  production-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test:unit
+      # Test records never go to a real analytics collector.
+      - run: npm run build
+        env:
+          SITE_URL: https://delightech.net
+          SITE_INDEXING_ENABLED: "true"
+          NEXT_PUBLIC_ANALYTICS_COLLECT_URL: ""
+          NEXT_PUBLIC_ANALYTICS_WEBSITE_ID: ""
+      - run: npm run test:production

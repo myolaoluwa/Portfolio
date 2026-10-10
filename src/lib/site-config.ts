@@ -14,5 +14,10 @@ if (
     "SITE_URL must be an HTTPS origin without credentials, path, query, or fragment.",
   );
 }
-// The confirmed production domain is indexable. Set false on hosted previews.
-export const indexingEnabled = process.env.SITE_INDEXING_ENABLED !== "false";
+// Hosted previews must not inherit production indexing, even when their
+// environment accidentally includes SITE_INDEXING_ENABLED=true.
+const hostedPreview =
+  process.env.VERCEL_ENV === "preview" ||
+  process.env.VERCEL_ENV === "development";
+export const indexingEnabled =
+  !hostedPreview && process.env.SITE_INDEXING_ENABLED !== "false";

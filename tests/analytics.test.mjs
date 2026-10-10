@@ -57,6 +57,29 @@ test("collection requires valid configuration and explicit consent", () => {
   });
 });
 
+test("approved booking clicks are intent only and respect consent", () => {
+  const f = fixture();
+  f.configure();
+  const action = f.api.analyticsLinkEvent("https://calendly.com/hello-delightech/30min");
+  assert.equal(action.name, "booking_click");
+  assert.equal(f.api.analyticsLinkEvent("https://calendly.com/someone-else/30min"), null);
+  assert.equal(f.api.analyticsLinkEvent("https://calendly.com/hello-delightech/30min?email=private"), null);
+  assert.equal(f.api.analyticsLinkEvent("/work/unknown"), null);
+  assert.equal(f.api.analyticsLinkEvent("/work/elara").project, "elara");
+  assert.equal(f.api.analyticsLinkEvent("mailto:hello@delightech.net").name, "contact_click");
+  f.api.trackEvent(action.name);
+  assert.equal(f.requests.length, 0);
+  f.storage.set(f.api.analyticsChoiceKey, "granted");
+  f.api.trackEvent(action.name);
+  const payload = JSON.parse(f.requests[0][1].body).payload;
+  assert.equal(payload.name, "booking_click");
+  assert.equal(payload.data, undefined);
+  assert.equal(JSON.stringify(payload).includes("calendly"), false);
+  f.storage.set(f.api.analyticsChoiceKey, "denied");
+  f.api.trackEvent(action.name);
+  assert.equal(f.requests.length, 1);
+});
+
 test("withdrawal, DNT, GPC, storage errors, and unknown paths prevent collection", () => {
   const f = fixture();
   f.configure();
@@ -78,6 +101,28 @@ test("withdrawal, DNT, GPC, storage errors, and unknown paths prevent collection
   };
   f.api.trackEvent("page_view");
   assert.equal(f.requests.length, 0);
+});
+
+test("service-page collection is consent-controlled and limited to known routes", () => {
+  const f = fixture();
+  f.configure();
+  for (const slug of ["business-websites", "web-applications", "mobile-apps", "ongoing-improvements"]) {
+    f.context.window.location.pathname = `/services/${slug}`;
+    f.api.trackEvent("page_view");
+  }
+  assert.equal(f.requests.length, 0);
+  f.storage.set(f.api.analyticsChoiceKey, "granted");
+  for (const slug of ["business-websites", "web-applications", "mobile-apps", "ongoing-improvements"]) {
+    f.context.window.location.pathname = `/services/${slug}`;
+    f.api.trackEvent("page_view");
+  }
+  assert.equal(f.requests.length, 4);
+  for (const pathname of ["/services/unknown", "/services/mobile-apps/private", "/privacy"]) {
+    f.context.window.location.pathname = pathname;
+    f.api.trackEvent("page_view");
+  }
+  assert.equal(f.requests.length, 4);
+  assert.equal(JSON.parse(f.requests[0][1].body).payload.url, "/services/business-websites");
 });
 
 test("invalid collectors stay disabled and failures do not break navigation", async () => {

@@ -6,13 +6,18 @@ import {
 } from "@/lib/project-evidence";
 import styles from "./studio-trust.module.css";
 import { ArrowUpRight } from "lucide-react";
+import { getPublishedTeam } from "@/lib/studio-team";
 
 export function StudioTeam() {
+  const members = getPublishedTeam();
   return (
     <aside className={styles.team} aria-labelledby="studio-team-title">
       <div>
         <span className={styles.eyebrow}>DELIGHTECH / THE TEAM</span>
         <h3 id="studio-team-title">You hire the studio. We build together.</h3>
+        {members.length > 0 && <dl className={styles.members} aria-label="Studio leadership and team">
+          {members.map((member) => <div key={member.id}><dt>{member.name}</dt><dd>{member.role}</dd></div>)}
+        </dl>}
       </div>
       <div>
         <p>

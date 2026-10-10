@@ -1,41 +1,8 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import styles from "./services.module.css";
 import { ApprovedEvidence, StudioTeam } from "./studio-trust";
-
-const services = [
-  {
-    number: "01",
-    title: "Business websites",
-    benefit:
-      "Give potential customers a clear picture of your business and a straightforward way to take the next step.",
-    deliverable:
-      "A responsive website with a considered page structure, clear service messaging, and enquiry or booking integrations suited to your business.",
-  },
-  {
-    number: "02",
-    title: "Web applications",
-    benefit:
-      "Turn a product idea or a repetitive business workflow into software people can actually use.",
-    deliverable:
-      "A working web application with the screens, accounts, data, dashboards, and integrations your agreed scope needs—not just a visual prototype.",
-  },
-  {
-    number: "03",
-    title: "Mobile apps",
-    benefit:
-      "Make your product’s key tasks convenient to complete on a phone, wherever your users are.",
-    deliverable:
-      "Mobile-first interfaces and connected app workflows, including Android app delivery where appropriate. Target platforms and release requirements are agreed up front.",
-  },
-  {
-    number: "04",
-    title: "Ongoing improvements",
-    benefit:
-      "Keep a useful product moving forward without starting again from scratch.",
-    deliverable:
-      "A review of your existing website or app, followed by scoped fixes, interface refinements, performance improvements, or new features, with checks before handover.",
-  },
-];
+import Link from "next/link";
+import { serviceOffers } from "@/lib/services";
 
 export function Services() {
   return (
@@ -59,7 +26,7 @@ export function Services() {
         </div>
         <StudioTeam />
         <div className={styles.grid}>
-          {services.map((service) => (
+          {serviceOffers.map((service) => (
             <article className={styles.offer} key={service.number}>
               <div className={styles.topline}>
                 <span>{service.number}</span>
@@ -71,6 +38,7 @@ export function Services() {
                 <span className={styles.eyebrow}>WHAT YOU GET</span>
                 <p>{service.deliverable}</p>
               </div>
+              <Link className={styles.detailsLink} href={`/services/${service.slug}`}>Explore {service.title.toLowerCase()} <ArrowRight size={16} aria-hidden="true" /></Link>
             </article>
           ))}
         </div>

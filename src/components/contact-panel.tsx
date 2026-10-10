@@ -36,7 +36,7 @@ export function ContactPanel() {
         </div>
         <div>
           <dt>Availability</dt>
-          <dd>To be confirmed</dd>
+          <dd>Available for new projects</dd>
         </div>
         <div>
           <dt>Booking</dt>

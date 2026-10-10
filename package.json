@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:analytics": "node --test tests/analytics.test.mjs"
+    "test:analytics": "node --test tests/analytics.test.mjs",
+    "test:unit": "node --test tests/*.test.mjs",
+    "test:landing": "node tests/landing-audit.cjs",
+    "test:services": "node tests/services-audit.cjs",
+    "test:usability": "node tests/usability-audit.cjs",
+    "test:production": "node tests/production-check.cjs"
   },
   "dependencies": {
     "lucide-react": "^1.49.0",

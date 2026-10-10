@@ -109,6 +109,18 @@
   padding-top: 26px;
 }
 
+.detailsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
 .nextStep p {
   max-width: 65ch;
   margin: 0;

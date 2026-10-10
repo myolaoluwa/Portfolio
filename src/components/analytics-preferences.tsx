@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   analyticsChoiceKey,
   analyticsConfiguration,
+  analyticsLinkEvent,
   privacySignalEnabled,
   trackEvent,
 } from "@/lib/analytics";
@@ -37,7 +38,7 @@ export function AnalyticsPreferences() {
     if (!available || choice !== "granted") return;
     trackEvent("page_view");
     const seen = new Set<string>();
-    const observer = new IntersectionObserver(
+    const observer = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const sectionId = (entry.target as HTMLElement).dataset.analyticsSection || entry.target.id;
@@ -62,19 +63,16 @@ export function AnalyticsPreferences() {
         const heading = section.querySelector("h2");
         if (heading) {
           heading.dataset.analyticsSection = id;
-          observer.observe(heading);
-        } else observer.observe(section);
+          observer?.observe(heading);
+        } else observer?.observe(section);
       }
     }
     const click = (event: MouseEvent) => {
       const anchor = (event.target as Element)?.closest?.("a[href]");
       if (!anchor || anchor.getAttribute("aria-disabled") === "true") return;
       const href = anchor.getAttribute("href") || "";
-      const project = /^\/work\/(elara|cashflow|oracle|nomi)\/?$/.exec(
-        href,
-      )?.[1];
-      if (project) trackEvent("project_open", project);
-      if (href.startsWith("mailto:")) trackEvent("contact_click");
+      const action = analyticsLinkEvent(href);
+      if (action) trackEvent(action.name, action.project);
     };
     const video = (event: Event) =>
       trackEvent(
@@ -84,7 +82,7 @@ export function AnalyticsPreferences() {
     document.addEventListener("click", click);
     window.addEventListener("portfolio:video-play", video);
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
       document.removeEventListener("click", click);
       window.removeEventListener("portfolio:video-play", video);
     };

@@ -2,7 +2,7 @@
 
 ## Confirmed positioning
 
-Clients hire **DelighTech**, a software studio led by **Olaoluwa, CEO**, with an expert team. Personal “I” copy is appropriate for Olaoluwa’s introduction; offers, delivery, approach, and studio contact use “we” or “DelighTech.” No individual team names, credentials, years of experience, or project-specific roles have been supplied.
+Clients hire **DelighTech**, a software studio led by **Olaoluwa, CEO**, with an expert team. Personal “I” copy is appropriate for Olaoluwa’s introduction; offers, delivery, approach, and studio contact use “we” or “DelighTech.” Only the CEO profile is currently published. Additional team profiles are deferred at the owner’s request. No credentials, years of experience or project-specific role assignments are inferred.
 
 Elara and Cashflow are finished products used by real users, as confirmed by Olaoluwa. Usage is described without numbers. Olaoluwa separately confirmed that Cashflow and Bizflow are DelighTech-owned products; Oracle, Elara, and Nomi are collaborations.
 
@@ -36,6 +36,8 @@ Unverified, draft, or incomplete entries are not rendered. Testimonials retain t
 All values in `src/` must be safe for public delivery. Do not add private customer records, approval correspondence, internal documents, secrets, or confidential financial data. Keep evidence and consent records in an appropriately private location outside the published source; use only the approved public summary here.
 
 ## Still needed from Olaoluwa
+
+Use [the evidence intake form](trust-evidence-intake.md) to supply the remaining material. Approved public team profiles have a separate publication gate in `src/lib/studio-team.ts`; only the confirmed CEO profile is populated. Names and actual roles require verification and permission, just as project evidence does. Draft source entries are not private.
 
 DelighTech owns Cashflow, built for businesses, and Bizflow, built for network marketers and business owners. Both are labelled **DelighTech-owned product**, not commissioned client work. Oracle, Elara, and Nomi are labelled **Collaboration**; detailed credits remain pending.
 

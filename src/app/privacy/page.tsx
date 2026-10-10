@@ -15,12 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
-  const configuredEmail = process.env.PRIVACY_CONTACT_EMAIL?.trim();
-  const email =
-    configuredEmail &&
-    /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(configuredEmail)
-      ? configuredEmail
-      : null;
+  const email = "hello@delightech.net";
   return (
     <div className={styles.page}>
       <a className={styles.skip} href="#privacy-content">
@@ -40,21 +35,8 @@ export default function PrivacyPage() {
             What this portfolio collects, why we use optional analytics, and how
             you stay in control.
           </p>
-          <span className={styles.updated}>Last updated: October 3, 2026</span>
+          <span className={styles.updated}>Last updated: October 10, 2026</span>
         </div>
-        {!email && (
-          <aside
-            className={styles.pending}
-            aria-label="Notice awaiting contact details"
-          >
-            <strong>Local preview: privacy contact details are pending.</strong>
-            <p>
-              This notice is prepared for review. DelighTech’s approved privacy
-              email and the analytics account’s retention settings must be
-              confirmed before public launch.
-            </p>
-          </aside>
-        )}
         <section>
           <h2>1. Who is responsible</h2>
           <p>
@@ -79,6 +61,21 @@ export default function PrivacyPage() {
             information you include in that message. Please do not send
             sensitive personal information unnecessarily.
           </p>
+          <p>
+            Our booking link opens Calendly, a separate service. If you book a
+            discovery call, Calendly processes the details you submit, such as
+            your name, email address, selected meeting time, and answers to
+            booking questions. DelighTech receives the booking details to
+            arrange and prepare for the call. Read{" "}
+            <a
+              href="https://calendly.com/legal/privacy-notice"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Calendly’s privacy notice
+            </a>
+            . Opening the link does not grant consent to portfolio analytics.
+          </p>
         </section>
         <section>
           <h2>3. Optional analytics</h2>
@@ -92,8 +89,10 @@ export default function PrivacyPage() {
             event name, and sometimes a project name. Events include page
             visits, project and service section views, contact section views,
             project-link clicks, full project-video plays, and clicks on enabled
-            email links. A contact click is not evidence that an enquiry was
-            sent.
+            email links and the Calendly booking link. A contact or booking-link
+            click is not evidence that an enquiry was sent or a meeting booked.
+            Known page visits include the homepage, project stories and service
+            pages; the privacy notice itself is excluded from collection.
           </p>
           <p>
             We do not include query strings, URL fragments, referrers, form
@@ -147,10 +146,11 @@ export default function PrivacyPage() {
         <section>
           <h2>5. Providers, retention, and other websites</h2>
           <p>
-            Analytics records are held in our Umami Cloud account under its plan
-            and retention settings; the portfolio does not maintain a separate
-            analytics database. Umami Cloud offers US and EU hosting, so
-            processing location depends on the account region. See{" "}
+            We use Umami Cloud’s free Hobby plan in the US hosting region, with
+            a six-month analytics data-retention period. Analytics records are
+            held in that account; the portfolio does not maintain a separate
+            analytics database. This means optional analytics data is processed
+            in the United States, including for visitors outside the US. See{" "}
             <a
               href="https://docs.umami.is/docs/cloud/faq"
               target="_blank"
@@ -158,8 +158,8 @@ export default function PrivacyPage() {
             >
               Umami’s Cloud information
             </a>
-            . The configured region and retention period should be confirmed
-            before this notice is publicly launched.
+            . This six-month period applies to analytics, not email enquiries,
+            booking records, or hosting logs.
           </p>
           <p>
             Links to GitHub, project apps, stores, or other external services
@@ -170,19 +170,11 @@ export default function PrivacyPage() {
         </section>
         <section>
           <h2>6. Privacy questions</h2>
-          {email ? (
-            <p>
-              For questions about this notice or requests relating to
-              information you have shared with DelighTech, email{" "}
-              <a href={`mailto:${email}`}>{email}</a>.
-            </p>
-          ) : (
-            <p>
-              A dedicated privacy contact email is being prepared and will be
-              added before public launch. We have not supplied a placeholder
-              email that would fail to deliver your request.
-            </p>
-          )}
+          <p>
+            For questions about this notice or requests relating to
+            information you have shared with DelighTech, email{" "}
+            <a href={`mailto:${email}`}>{email}</a>.
+          </p>
           <p>
             Changes to this website’s collection practices will be reflected in
             this notice and its update date.

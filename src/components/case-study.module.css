@@ -1,3 +1,20 @@
+.enquiry {
+  margin-top: 48px;
+  padding: clamp(24px, 4vw, 48px);
+  border: 1px solid var(--case-line);
+  background: #e3ecdd;
+}
+.enquiry h2 {
+  margin: 16px 0;
+  font: 500 clamp(30px, 4vw, 48px)/1.1 var(--display), sans-serif;
+  letter-spacing: -0.04em;
+}
+.enquiry p {
+  max-width: 640px;
+  color: var(--case-muted);
+  font-size: 16px;
+  line-height: 1.75;
+}
 .page {
   background: #f1f3ec;
   color: #18211d;
@@ -57,6 +74,22 @@
   max-width: 1224px;
   padding: 0 36px;
   margin: auto;
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 20px;
+  color: var(--case-muted);
+  font-size: 12px;
+}
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .hero {
   padding: 78px 0 46px;

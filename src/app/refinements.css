@@ -881,6 +881,16 @@ summary {
   .cinema-bottomline { bottom: 8px; }
 }
 
+@media (max-height: 500px) and (orientation: landscape) {
+  .cinema-scene-0 .cinema-copy { top: 94px; width: 60vw; }
+  .cinema-scene-0 .cinema-copy h1 { font-size: 24px; line-height: 1.1; }
+  .cinema-scene-0 .cinema-description { max-width: none; font-size: 10px; line-height: 1.4; margin-top: 8px; }
+  .cinema-opening-actions { margin-top: 8px; }
+  .cinema-action-pair { gap: 8px; }
+  .cinema-action-pair a { font-size: 10px; padding: 6px 10px; gap: 8px; }
+  .cinema-optional-links { margin-top: 0; }
+  .cinema-optional-links a, .cinema-optional-links button { font-size: 10px; }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

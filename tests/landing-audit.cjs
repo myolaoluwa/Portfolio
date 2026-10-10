@@ -23,7 +23,16 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
       if (await decline.isVisible()) await decline.click();
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `Page overflow at ${width}`);
       assert.equal(await page.locator('#work .featured-project').count(), 5);
-      assert.equal(await page.locator('.contact-details a').getAttribute('href'), 'mailto:hello@delightech.net');
+      const heroActions = page.locator('.cinema-opening-actions');
+      assert.equal(await heroActions.getByRole('link', { name: /Book a discovery call/ }).getAttribute('href'), 'https://calendly.com/hello-delightech/30min');
+      assert.equal(await heroActions.getByRole('link', { name: /Explore our work/ }).getAttribute('href'), '#work');
+      assert.equal(await heroActions.getByRole('link', { name: /How we can help/ }).getAttribute('href'), '#services');
+      assert.equal(await page.locator('.contact-details a[href^="mailto:"]').getAttribute('href'), 'mailto:hello@delightech.net');
+      const booking = page.getByRole('link', { name: 'Book a discovery call (opens in a new tab)', exact: true });
+      assert.equal(await booking.getAttribute('href'), 'https://calendly.com/hello-delightech/30min');
+      assert.equal(await booking.getAttribute('target'), '_blank');
+      assert.match(await booking.getAttribute('rel'), /noopener/);
+      assert.match(await page.locator('.contact-details').innerText(), /Available for new projects/);
 
       for (let chapter = 0; chapter < 5; chapter++) {
         // Hidden chapter rail on compact landscape: use the visible next button.
@@ -66,9 +75,14 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
         await film.locator('dialog[open]').waitFor();
         assert.equal(await film.locator('dialog video').evaluate(video => video.muted), false);
         await page.keyboard.press('Escape');
-        await page.waitForTimeout(100);
+        // The native close event and React cleanup need to settle; do not
+        // mistake a slow CI/browser frame for a failed scroll restoration.
+        await page.waitForFunction(() =>
+          document.querySelectorAll('dialog[open]').length === 0 &&
+          document.body.style.overflow !== 'hidden', null, { timeout: 5000 });
         assert.equal(await film.locator('dialog').evaluate(dialog => dialog.open), false);
         assert.notEqual(await page.evaluate(() => document.body.style.overflow), 'hidden');
+        assert.equal(await film.locator('.project-film-card').evaluate(button => document.activeElement === button), true, 'Video close restores trigger focus');
       }
       await page.locator('#engagement-faq summary').first().click();
       assert.equal(await page.locator('#engagement-faq details').first().getAttribute('open'), '');

@@ -13,13 +13,16 @@ import { OrganizationData } from "@/components/structured-data";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
-  display: "swap",
+  // Keep the metric-adjusted fallback on slow first visits rather than
+  // repainting the largest text block when the font eventually arrives.
+  display: "optional",
   variable: "--font-display",
 });
 
 const body = DM_Sans({
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
+  preload: false,
   variable: "--font-body",
 });
 
@@ -34,9 +37,19 @@ const mono = DM_Mono({
 const serif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
-  display: "swap",
+  style: "italic",
+  display: "optional",
   variable: "--font-serif",
+});
+
+// Upright serif is used below the fold and on case studies, not the opening.
+const serifNormal = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: "normal",
+  display: "swap",
+  preload: false,
+  variable: "--font-serif-normal",
 });
 
 export const metadata: Metadata = {
@@ -97,7 +110,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable} ${serif.variable}`}
+      className={`${display.variable} ${body.variable} ${mono.variable} ${serif.variable} ${serifNormal.variable}`}
     >
       <body><OrganizationData />{children}<AnalyticsPreferences /></body>
     </html>

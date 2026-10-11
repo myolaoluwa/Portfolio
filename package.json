@@ -15,6 +15,8 @@
     "test:insights": "node tests/insights-audit.cjs",
     "test:cashflow": "node tests/cashflow-preview-audit.cjs",
     "test:mobile-loading": "node tests/mobile-loading-audit.cjs",
+    "test:accessibility": "node tests/accessibility-audit.cjs",
+    "test:browser": "node tests/browser-check.cjs",
     "test:production": "node tests/production-check.cjs"
   },
   "dependencies": {
@@ -28,8 +30,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "4.14.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
+    "playwright": "1.64.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

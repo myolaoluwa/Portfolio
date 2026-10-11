@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- Optional local browser audit. */
 const assert = require('node:assert/strict');
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const engine = process.env.BROWSER_ENGINE || 'chromium';
+const browserType = require(process.env.PLAYWRIGHT_MODULE || 'playwright')[engine];
 const base = process.env.BASE_URL || 'http://localhost:3000';
 
 (async () => {
-  const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
+  const browser = await browserType.launch({ headless: true, ...(engine === 'chromium' && process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
   try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
     await context.route('https://cloud.umami.is/**', route => route.abort());

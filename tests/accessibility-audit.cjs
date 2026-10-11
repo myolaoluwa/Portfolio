@@ -1,0 +1,69 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- Standalone browser regression check. */
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const engine = process.env.BROWSER_ENGINE || 'chromium';
+const browserType = require(process.env.PLAYWRIGHT_MODULE || 'playwright')[engine];
+const base = process.env.BASE_URL || 'http://localhost:3000';
+const axePath = process.env.AXE_SCRIPT || require.resolve('axe-core/axe.min.js');
+
+(async () => {
+  assert.ok(browserType, `Unknown browser engine: ${engine}`);
+  const browser = await browserType.launch({ headless: true, ...(engine === 'chromium' && process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
+  try {
+    const xml = await (await fetch(`${base}/sitemap.xml`)).text();
+    const routes = [...new Set([...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => new URL(match[1]).pathname))];
+    assert.ok(routes.includes('/') && routes.includes('/privacy') && routes.length >= 14);
+    for (const width of [393, 1440]) {
+      const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
+      await context.route('https://cloud.umami.is/**', route => route.abort());
+      const page = await context.newPage();
+      const errors = [];
+      page.on('pageerror', error => errors.push(error.message));
+      for (const route of routes) {
+        await page.goto(`${base}${route}`);
+        await page.locator('main').waitFor();
+        assert.equal(await page.locator('h1').count(), 1, `Single page heading: ${route}`);
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Overflow: ${route}`);
+        // Inspect the real project colours, including cards far below the intro.
+        // Deferred painting can leave axe's pixel-background sampling incomplete.
+        // Force rendering only for this audit; never disable contrast rules or
+        // change the production content-visibility optimisation.
+        await page.addStyleTag({ content: '.featured-project { content-visibility: visible !important; }' });
+        await page.addScriptTag({ path: path.resolve(axePath) });
+        const violations = await page.evaluate(async () => (await window.axe.run(document, {
+          runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] },
+        })).violations.map(item => ({ id: item.id, nodes: item.nodes.map(node => node.target) })));
+        assert.deepEqual(violations, [], `${engine} ${width}px ${route}: automated accessibility violations`);
+      }
+      await page.goto(base);
+      const decline = page.getByRole('button', { name: 'Decline', exact: true });
+      if (await decline.isVisible()) await decline.click();
+      // Keyboard activation, visible focus and a route past the optional intro.
+      const skip = page.locator('.cinema-skip');
+      await page.keyboard.press('Tab');
+      await skip.focus();
+      assert.equal(await skip.evaluate(element => element.matches(':focus-visible') && getComputedStyle(element).outlineStyle !== 'none'), true);
+      await page.keyboard.press('Enter');
+      await page.waitForFunction(() => location.hash === '#work');
+      assert.equal(await page.locator('.contact-details button[disabled]').count(), 0, 'No unfinished contact actions');
+      for (const film of await page.locator('.project-film').all()) {
+        const trigger = film.locator('.project-film-card');
+        await trigger.focus();
+        await page.keyboard.press('Enter');
+        const modal = film.locator('dialog[open]');
+        await modal.waitFor();
+        assert.equal(await modal.evaluate(element => element.contains(document.activeElement)), true);
+        for (let tab = 0; tab < 8; tab++) {
+          await page.keyboard.press('Tab');
+          assert.equal(await modal.evaluate(element => element.contains(document.activeElement)), true, 'Modal retains keyboard focus');
+        }
+        await page.keyboard.press('Escape');
+        await page.waitForFunction(() => !document.querySelector('dialog[open]') && document.body.style.overflow !== 'hidden');
+        assert.equal(await trigger.evaluate(element => document.activeElement === element), true);
+      }
+      assert.deepEqual(errors, []);
+      console.log(`PASS ${engine} ${width}px: ${routes.length} routes, axe A/AA, overflow, keyboard skip, video focus/escape`);
+      await context.close();
+    }
+  } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

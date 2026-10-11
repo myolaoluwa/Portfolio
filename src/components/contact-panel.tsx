@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 export function ContactPanel() {
   return (
@@ -15,23 +15,6 @@ export function ContactPanel() {
             <a href="mailto:hello@delightech.net">
               hello@delightech.net <ArrowUpRight size={16} aria-hidden="true" />
             </a>
-          </dd>
-        </div>
-        <div>
-          <dt>LinkedIn</dt>
-          <dd>
-            <button type="button" disabled>
-              LinkedIn coming soon{" "}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </button>
-          </dd>
-        </div>
-        <div>
-          <dt>Résumé</dt>
-          <dd>
-            <button type="button" disabled>
-              Résumé coming soon <ArrowDown size={16} aria-hidden="true" />
-            </button>
           </dd>
         </div>
         <div>
@@ -54,8 +37,8 @@ export function ContactPanel() {
         </div>
       </dl>
       <p className="contact-panel-note">
-        Email us about your project or book a discovery call. LinkedIn and
-        résumé details will be added when available.
+        Tell us what you want to build. Email our team or book a discovery call
+        to discuss your goals and the next step.
       </p>
     </aside>
   );

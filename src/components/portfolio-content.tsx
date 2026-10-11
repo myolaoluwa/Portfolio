@@ -539,4 +539,3 @@ export function PortfolioContent({ services, engagement, insights }: {
     </>
   );
 }
-

@@ -19,7 +19,8 @@
     "test:mobile-loading": "node tests/mobile-loading-audit.cjs",
     "test:accessibility": "node tests/accessibility-audit.cjs",
     "test:browser": "node tests/browser-check.cjs",
-    "test:production": "node tests/production-check.cjs"
+    "test:production": "node tests/production-check.cjs",
+    "test:operations": "node scripts/operations-check.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.49.0",

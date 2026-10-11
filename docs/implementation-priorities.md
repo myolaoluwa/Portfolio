@@ -111,6 +111,25 @@ Verification: lint, all 12 unit tests, production build and ten-route production
 
 Release limits: physical iOS/Android, Safari and Firefox have not been verified here. Meaningful project-video speech still needs human-reviewed captions/transcripts; no transcript has been invented. The approved opening asset still needs owner confirmation because the current city composition differs from the earlier tree brief. Live DNS validation, deployed consent/analytics checks, real-user Core Web Vitals, genuine project results, optional résumé/store links and owner visual approval remain separate release work. Do not describe the site as fully certified or guarantee international search rankings. Changes remain local, without commit, push or deployment.
 
+## 6. Operational readiness — publication authorized; account/recovery acceptance pending
+
+Added a read-only production smoke check covering all sitemap routes, indexing,
+canonical consistency, essential enquiry links, robots, www redirect and media
+asset headers. Prepared six-hourly/manual GitHub monitoring, weekly runtime
+dependency audits and reviewed Dependabot updates. No analytics events, enquiries,
+bookings, paid services, account settings or DNS mutations are introduced.
+
+The [operational runbook](operational-readiness.md) records release/rollback,
+alert setup, encrypted backups, restore drills, account security, renewals and
+maintenance responsibilities. Prepared automation is not active until published;
+notification delivery, backup/recovery drills and account security require owner
+confirmation. This phase does not certify complete production readiness or an
+LCP/uptime target. Existing visuals and browser bundles are unchanged.
+
+Latest prior release: `84b93fd`, production measurement published October 11,
+2026. GitHub run 38140267044 passed and all 14 deployed route checks passed.
+Older implementation records below are historical, not the current release state.
+
 ## Local checks
 
 ### Next phase: production validation and performance measurement — publication authorized

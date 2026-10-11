@@ -46,6 +46,21 @@ export function ProjectVideo({
         fullVideo.current?.pause();
       }
     };
+    const containFocus = () => {
+      const modal = dialog.current;
+      if (modal?.open && !modal.contains(document.activeElement)) {
+        modal.querySelector<HTMLButtonElement>('button')?.focus();
+      }
+    };
+    // Some native video control focus transitions bypass the dialog's own
+    // keydown handler. Recover only when focus actually leaves an open modal;
+    // do not intercept navigation inside the player's native controls.
+    let focusFrame = 0;
+    const checkTabFocus = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab' || !dialog.current?.open) return;
+      cancelAnimationFrame(focusFrame);
+      focusFrame = requestAnimationFrame(containFocus);
+    };
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const observer = typeof IntersectionObserver === "undefined"
       ? null
@@ -55,11 +70,16 @@ export function ProjectVideo({
     if (card.current) observer?.observe(card.current);
     window.addEventListener("portfolio:video-start", stop);
     document.addEventListener("visibilitychange", visibility);
+    document.addEventListener('focusin', containFocus);
+    document.addEventListener('keydown', checkTabFocus, true);
     motion.addEventListener("change", stop);
     return () => {
       observer?.disconnect();
       window.removeEventListener("portfolio:video-start", stop);
       document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener('focusin', containFocus);
+      document.removeEventListener('keydown', checkTabFocus, true);
+      cancelAnimationFrame(focusFrame);
       motion.removeEventListener("change", stop);
       if (previousOverflow.current !== null)
         document.body.style.overflow = previousOverflow.current;

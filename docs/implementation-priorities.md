@@ -113,6 +113,22 @@ Release limits: physical iOS/Android, Safari and Firefox have not been verified 
 
 ## Local checks
 
+### Next phase: production validation and performance measurement — publication authorized
+
+After owner approval, the caption/credibility refinements were committed and
+pushed. Added consent-controlled document LCP/INP/CLS reporting through the
+existing Umami adapter, minimal rounded payloads, in-memory deduplication,
+route-attribution safeguards and keepalive transport. Updated the consent copy
+and privacy notice. No accounts, environment files, third-party SDKs or website
+visuals were changed. See [performance measurement](performance-measurement.md)
+for review instructions and sampling limitations. This is measurement
+infrastructure, not a claim that the 2.5-second LCP target has been reached.
+
+The owner has authorized committing and pushing this implementation. Automated unit/browser
+checks use mocked collectors, not fabricated Umami visits. Real field results,
+physical-device/assistive-technology checks and genuine third-party project
+evidence remain outstanding acceptance tasks.
+
 ```sh
 npm run lint
 npm run test:unit

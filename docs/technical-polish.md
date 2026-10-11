@@ -20,6 +20,12 @@ Olaoluwa confirmed `https://delightech.net` as the production domain.
 
 ## Optional analytics — configuration-dependent
 
+The performance-measurement refinement also reports consented LCP/INP/CLS samples through
+this adapter. It rechecks permission at transmission, minimises event data and
+does not send metric IDs or performance-entry details. See
+[performance measurement](performance-measurement.md) for dashboard instructions
+and document/viewport sampling limits. This is not evidence of an LCP pass.
+
 Olaoluwa configured Umami Cloud locally and confirmed that events arrive. The values are in ignored `.env.local`, so fresh clones and hosting builds remain unconfigured until their environment variables are supplied. An unconfigured build makes no analytics collection requests. No analytics SDK or remote tracker script is installed. Email and Calendly booking links are now available; their clicks measure intent, not delivered enquiries or completed bookings.
 
 The optional adapter speaks the documented Umami `/api/send` event format: https://docs.umami.is/docs/api/sending-stats. The confirmed provider is Umami Cloud Hobby, US hosting region, with six-month analytics retention. These account details were supplied by the owner; no authenticated account inspection is claimed.

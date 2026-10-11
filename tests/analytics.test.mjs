@@ -15,6 +15,7 @@ function fixture() {
     localStorage: { getItem: (key) => storage.get(key) },
     window: {
       location: { pathname: "/work/elara", hostname: "delightech.net" },
+      innerWidth: 393,
     },
     fetch: (...args) => {
       requests.push(args);
@@ -163,4 +164,51 @@ test("Insights measurement requires consent and excludes drafts or unknown artic
     f.api.trackEvent("page_view");
   }
   assert.equal(f.requests.length, 4);
+});
+
+test('Web Vitals send only minimal, deduplicated document samples after consent', () => {
+  const f = fixture();
+  f.configure();
+  const report = f.api.createWebVitalsReporter('/work/elara');
+  const metric = { name: 'LCP', value: 2722.768, id: 'local-only', entries: [{ url: 'private', text: 'private' }] };
+  report(metric);
+  assert.equal(f.requests.length, 0);
+  f.storage.set(f.api.analyticsChoiceKey, 'granted');
+  report(metric);
+  report(metric);
+  assert.equal(f.requests.length, 1);
+  const options = f.requests[0][1];
+  assert.equal(options.keepalive, true);
+  const payload = JSON.parse(options.body).payload;
+  assert.equal(payload.name, 'web_vital_lcp');
+  assert.deepEqual(payload.data, { value: 2723, unit: 'ms', rating: 'needs-improvement', viewport: 'compact', scope: 'document' });
+  assert.doesNotMatch(options.body, /local-only|private|entries/);
+  report({ name: 'CLS', value: 0.0834, id: 'cls' });
+  assert.equal(JSON.parse(f.requests[1][1].body).payload.data.value, 0.083);
+  assert.equal(JSON.parse(f.requests[1][1].body).payload.data.rating, 'good');
+  f.context.window.innerWidth = 1440;
+  report({ name: 'INP', value: 501.2, id: 'inp' });
+  assert.equal(JSON.parse(f.requests[2][1].body).payload.data.rating, 'poor');
+  assert.equal(JSON.parse(f.requests[2][1].body).payload.data.viewport, 'wide');
+});
+
+test('Web Vitals respect withdrawal, privacy signals, invalid metrics and route changes', () => {
+  const f = fixture();
+  f.configure();
+  f.storage.set(f.api.analyticsChoiceKey, 'granted');
+  const report = f.api.createWebVitalsReporter('/work/elara');
+  for (const metric of [{ name: 'FCP', value: 20, id: 'x' }, { name: 'LCP', value: NaN, id: 'x' }, { name: 'LCP', value: Infinity, id: 'x' }, { name: 'CLS', value: -1, id: 'x' }, { name: 'INP', value: 20, id: '' }]) report(metric);
+  const metric = { name: 'LCP', value: 2500, id: 'not-sent' };
+  f.storage.set(f.api.analyticsChoiceKey, 'denied'); report(metric);
+  f.storage.set(f.api.analyticsChoiceKey, 'granted');
+  f.context.navigator.doNotTrack = '1'; report(metric);
+  f.context.navigator.doNotTrack = '0';
+  f.context.navigator.globalPrivacyControl = true; report(metric);
+  f.context.navigator.globalPrivacyControl = false;
+  f.context.window.location.pathname = '/privacy'; report(metric);
+  f.api.createWebVitalsReporter('/privacy')(metric);
+  f.context.window.location.pathname = '/work/cashflow'; report(metric);
+  f.context.window.location.pathname = '/work/elara';
+  f.context.localStorage.getItem = () => { throw Error('Unavailable'); }; report(metric);
+  assert.equal(f.requests.length, 0);
 });

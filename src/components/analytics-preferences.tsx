@@ -109,7 +109,8 @@ export function AnalyticsPreferences() {
     <aside className={styles.panel} aria-label="Optional analytics preferences">
       <p>
         Optional analytics helps DelighTech understand which projects visitors
-        explore and whether they reach contact options. We don’t send form
+        explore, whether they reach contact options, and how smoothly the site
+        loads and responds. We don’t send form
         contents, query strings, or visitor identifiers. The analytics provider
         receives ordinary network information, including your IP address.
       </p>

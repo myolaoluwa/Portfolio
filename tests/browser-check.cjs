@@ -26,7 +26,7 @@ function run(script, extraEnv = {}) {
       }
       assert.ok(ready, 'Production server failed to start');
     }
-    for (const script of ['landing-audit', 'mobile-loading-audit', 'services-audit', 'insights-audit', 'cashflow-preview-audit', 'proof-audit']) await run(script);
+    for (const script of ['landing-audit', 'mobile-loading-audit', 'services-audit', 'insights-audit', 'cashflow-preview-audit', 'proof-audit', 'performance-audit']) await run(script);
     for (const engine of (process.env.BROWSER_ENGINES || 'chromium').split(',')) {
       await run('usability-audit', { BROWSER_ENGINE: engine });
       await run('accessibility-audit', { BROWSER_ENGINE: engine });

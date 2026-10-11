@@ -15,6 +15,7 @@
     "test:insights": "node tests/insights-audit.cjs",
     "test:cashflow": "node tests/cashflow-preview-audit.cjs",
     "test:proof": "node tests/proof-audit.cjs",
+    "test:performance": "node tests/performance-audit.cjs",
     "test:mobile-loading": "node tests/mobile-loading-audit.cjs",
     "test:accessibility": "node tests/accessibility-audit.cjs",
     "test:browser": "node tests/browser-check.cjs",

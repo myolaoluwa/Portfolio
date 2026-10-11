@@ -67,25 +67,33 @@ export function privacySignalEnabled() {
 }
 
 export function trackEvent(name: AnalyticsEvent, project?: string) {
-  const config = analyticsConfiguration();
-  if (!config || privacySignalEnabled()) return;
-  try {
-    if (localStorage.getItem(analyticsChoiceKey) !== "granted") return;
-  } catch {
-    return;
-  }
-  // Only known portfolio paths and project names are ever sent.
-  const path = window.location.pathname;
-  const normalized = path.replace(/\/$/, "");
-  if (!/^\/(?:work\/(?:elara|cashflow|oracle|nomi)\/?|services\/(?:business-websites|web-applications|mobile-apps|ongoing-improvements)\/?)?$/.test(path) && normalized !== "/insights" && !analyticsInsightPaths.includes(normalized)) return;
   const data =
     project && /^(elara|cashflow|oracle|nomi|bizflow)$/.test(project)
       ? { project }
       : undefined;
+  sendAnalyticsEvent(name, window.location.pathname, data);
+}
+
+function sendAnalyticsEvent(
+  name: string,
+  path: string,
+  data?: Record<string, string | number>,
+) {
+  const config = analyticsConfiguration();
+  if (!config || privacySignalEnabled()) return false;
+  try {
+    if (localStorage.getItem(analyticsChoiceKey) !== "granted") return false;
+  } catch {
+    return false;
+  }
+  // Only known portfolio paths and project names are ever sent.
+  const normalized = path.replace(/\/$/, "");
+  if (!/^\/(?:work\/(?:elara|cashflow|oracle|nomi)\/?|services\/(?:business-websites|web-applications|mobile-apps|ongoing-improvements)\/?)?$/.test(path) && normalized !== "/insights" && !analyticsInsightPaths.includes(normalized)) return false;
   void fetch(config.endpoint, {
     method: "POST",
     credentials: "omit",
     referrerPolicy: "no-referrer",
+    keepalive: true,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       type: "event",
@@ -100,4 +108,33 @@ export function trackEvent(name: AnalyticsEvent, project?: string) {
   }).catch(() => {
     /* Measurement must never interrupt the portfolio. */
   });
+  return true;
+}
+
+type VitalMetric = { name: string; value: number; id: string };
+
+// Document-load samples, not SPA route timings. IDs are used only in memory
+// to avoid duplicate callbacks; they never leave the browser or enter storage.
+export function createWebVitalsReporter(documentPath: string) {
+  const reported = new Set<string>();
+  return (metric: VitalMetric) => {
+    if (window.location.pathname !== documentPath) return;
+    if (!['LCP', 'INP', 'CLS'].includes(metric.name) ||
+        !Number.isFinite(metric.value) || metric.value < 0 ||
+        typeof metric.id !== 'string' || !metric.id) return;
+    const key = `${metric.name}:${metric.id}`;
+    if (reported.has(key)) return;
+    const thresholds = metric.name === 'LCP' ? [2500, 4000]
+      : metric.name === 'INP' ? [200, 500] : [0.1, 0.25];
+    const rating = metric.value <= thresholds[0] ? 'good'
+      : metric.value <= thresholds[1] ? 'needs-improvement' : 'poor';
+    const sent = sendAnalyticsEvent(`web_vital_${metric.name.toLowerCase()}`, documentPath, {
+      value: metric.name === 'CLS' ? Math.round(metric.value * 1000) / 1000 : Math.round(metric.value),
+      unit: metric.name === 'CLS' ? 'score' : 'ms',
+      rating,
+      viewport: window.innerWidth <= 700 ? 'compact' : 'wide',
+      scope: 'document',
+    });
+    if (sent) reported.add(key);
+  };
 }

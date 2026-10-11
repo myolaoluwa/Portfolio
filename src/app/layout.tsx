@@ -10,6 +10,7 @@ import "./refinements.css";
 import { indexingEnabled, siteUrl } from "@/lib/site-config";
 import { AnalyticsPreferences } from "@/components/analytics-preferences";
 import { OrganizationData } from "@/components/structured-data";
+import { PerformanceMetrics } from "@/components/performance-metrics";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -112,7 +113,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable} ${serif.variable} ${serifNormal.variable}`}
     >
-      <body><OrganizationData />{children}<AnalyticsPreferences /></body>
+      <body><OrganizationData />{children}<AnalyticsPreferences /><PerformanceMetrics /></body>
     </html>
   );
 }

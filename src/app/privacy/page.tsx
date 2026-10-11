@@ -83,6 +83,17 @@ export default function PrivacyPage() {
             When configured, we use Umami Cloud only after you select{" "}
             <strong>Allow analytics</strong>. This helps us understand which
             projects visitors explore and whether they reach contact options.
+            It also helps us identify loading and interaction problems.
+          </p>
+          <p>
+            With the same permission, we send Core Web Vitals samples for
+            loading speed (LCP), responsiveness (INP) and layout stability (CLS).
+            These contain a rounded timing or score, its performance category,
+            a coarse compact/wide viewport category and the known document
+            pathname. We do not send performance-entry details, element text,
+            resource URLs or metric identifiers. Browser timing observations
+            stay local when consent is absent or withdrawn; no previous samples
+            are queued for later transmission.
           </p>
           <p>
             Our integration sends a known portfolio pathname, the hostname, an

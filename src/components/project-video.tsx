@@ -181,6 +181,25 @@ export function ProjectVideo({
         ref={dialog}
         className="project-film-dialog"
         onClose={close}
+        onKeyDown={(event) => {
+          if (event.key !== "Tab") return;
+          // Native modal dialogs make the rest of the page inert, but some
+          // browser/platform combinations still tab past the last control.
+          // Keep the explicit boundary controls in a predictable keyboard loop;
+          // leave native video controls and Escape behaviour intact.
+          const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(
+            'button:not(:disabled), a[href], video[controls], [tabindex="0"]',
+          )).filter((element) => element.getClientRects().length > 0);
+          const first = controls[0];
+          const last = controls.at(-1);
+          if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last?.focus();
+          } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first?.focus();
+          }
+        }}
         onClick={(event) => {
           if (event.target === event.currentTarget) dialog.current?.close();
         }}

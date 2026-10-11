@@ -52,6 +52,11 @@ measurements and real-user p75 when traffic is sufficient.
 - Existing tests protect reduced motion, media-load errors, unavailable
   IntersectionObserver, 200% CSS enlarged-content reflow and no-JavaScript
   content/FAQ access. CSS enlargement is not physical browser-zoom testing.
+- CI exposed a desktop video-dialog focus boundary that did not reproduce in
+  installed Chrome. Added explicit Tab/Shift+Tab wrapping between the dialog's
+  boundary controls, preserving native player controls and Escape. Regression
+  checks wait for loaded media or its error state before exercising the tab
+  sequence, because CI browser codec support differs from installed Chrome.
 - Analytics requests are blocked by browser tests; no bookings or enquiries
   are submitted during verification.
 

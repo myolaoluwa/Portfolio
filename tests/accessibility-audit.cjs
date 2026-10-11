@@ -53,10 +53,25 @@ const axePath = process.env.AXE_SCRIPT || require.resolve('axe-core/axe.min.js')
         const modal = film.locator('dialog[open]');
         await modal.waitFor();
         assert.equal(await modal.evaluate(element => element.contains(document.activeElement)), true);
+        // Codec support differs between installed Chrome and CI Chromium.
+        // Let native media controls finish initialising (or enter their error
+        // state) before testing their stable tab sequence.
+        await modal.locator('video').evaluate(video => new Promise((resolve, reject) => {
+          const ready = () => { if (video.readyState >= 2 || video.error) finish(); };
+          const timer = setTimeout(() => { cleanup(); reject(Error('Video controls did not settle')); }, 15000);
+          const cleanup = () => { clearTimeout(timer); video.removeEventListener('loadeddata', ready); video.removeEventListener('error', ready); };
+          const finish = () => { cleanup(); resolve(); };
+          video.addEventListener('loadeddata', ready);
+          video.addEventListener('error', ready);
+          ready();
+        }));
         for (let tab = 0; tab < 8; tab++) {
           await page.keyboard.press('Tab');
-          assert.equal(await modal.evaluate(element => element.contains(document.activeElement)), true, 'Modal retains keyboard focus');
+          assert.equal(await modal.evaluate(element => element.contains(document.activeElement)), true, `Modal retains keyboard focus: ${engine}, ${width}px, Tab ${tab + 1}, active=${await page.evaluate(() => document.activeElement?.outerHTML.slice(0,200))}`);
         }
+        await modal.getByRole('button', { name: 'Close video preview' }).focus();
+        await page.keyboard.press('Shift+Tab');
+        assert.equal(await modal.locator('button[aria-controls]').evaluate(element => document.activeElement === element), true, 'Reverse tab wraps to sound control');
         await page.keyboard.press('Escape');
         await page.waitForFunction(() => !document.querySelector('dialog[open]') && document.body.style.overflow !== 'hidden');
         assert.equal(await trigger.evaluate(element => document.activeElement === element), true);

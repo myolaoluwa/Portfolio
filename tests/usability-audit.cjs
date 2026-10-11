@@ -28,11 +28,15 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
       await film.locator('dialog[open]').waitFor();
       await film.getByRole('status').filter({ hasText: 'The video could not load' }).waitFor();
       if (await film.locator('#elara-showcase-video').count()) {
+        // Native caption preferences differ across browsers. Select the track
+        // explicitly before checking loading, particularly with failed media.
+        const track = film.locator('track');
+        assert.equal(await track.getAttribute('default'), '');
+        await track.evaluate(element => { element.track.mode = 'showing'; });
         await page.waitForFunction(() => {
           const track = document.querySelector('#elara-showcase-video track');
           return track?.readyState === 2 && track.track.cues?.length === 7;
         });
-        const track = film.locator('track');
         assert.equal(await track.getAttribute('kind'), 'captions');
         assert.equal(await track.getAttribute('srclang'), 'en');
         assert.equal(await track.evaluate(element => element.track.mode), 'showing');

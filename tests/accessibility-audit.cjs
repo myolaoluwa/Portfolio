@@ -32,8 +32,29 @@ const axePath = process.env.AXE_SCRIPT || require.resolve('axe-core/axe.min.js')
         await page.addScriptTag({ path: path.resolve(axePath) });
         const violations = await page.evaluate(async () => (await window.axe.run(document, {
           runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] },
-        })).violations.map(item => ({ id: item.id, nodes: item.nodes.map(node => node.target) })));
-        assert.deepEqual(violations, [], `${engine} ${width}px ${route}: automated accessibility violations`);
+        })).violations.map(item => ({ id: item.id, nodes: item.nodes.map(node => ({ target: node.target, summary: node.failureSummary })) })));
+        assert.deepEqual(violations.filter(item => item.id !== 'color-contrast'), [], `${engine} ${width}px ${route}: automated accessibility violations`);
+        // WebKit's off-screen pixel sampling differs from Chromium/Firefox.
+        // A reported contrast failure must pass the SAME rule when scrolled
+        // into view; no rule or failed node is simply waived or excluded.
+        for (const node of violations.find(item => item.id === 'color-contrast')?.nodes || []) {
+          let target = page.locator(node.target.join(' '));
+          const replacementProject = node.target.join(' ').match(/data-deferred-project="([^"]+)"/)?.[1];
+          if (await target.count() === 0 && replacementProject) target = page.locator(`[data-deferred-project="${replacementProject}"]`);
+          assert.equal(await target.count(), 1, `Contrast target disappeared before exposure: ${node.target}`);
+          const project = await target.evaluate(element => element.closest('[data-deferred-project]')?.getAttribute('data-deferred-project'));
+          await target.scrollIntoViewIfNeeded();
+          await page.waitForTimeout(100);
+          // A loading placeholder can be replaced by its actual dashboard
+          // during this scroll. Validate the replacement, not an absent node.
+          if (await target.count() === 0 && project) target = page.locator(`[data-deferred-project="${project}"]`);
+          assert.equal(await target.count(), 1, `Contrast target disappeared: ${node.target}`);
+          const visibleViolations = await target.evaluate(async element => (await window.axe.run(element, {
+            runOnly: { type: 'rule', values: ['color-contrast'] },
+          })).violations.map(item => ({ id: item.id, nodes: item.nodes.map(node => ({ target: node.target, summary: node.failureSummary })) })));
+          assert.deepEqual(visibleViolations, [], `${engine} ${width}px ${route}: visible contrast failure ${node.target}`);
+        }
+        if (violations.length) console.log(`PASS ${engine} ${width}px ${route}: every off-screen contrast report revalidated in viewport`);
       }
       await page.goto(base);
       const decline = page.getByRole('button', { name: 'Decline', exact: true });

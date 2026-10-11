@@ -45,6 +45,10 @@ measurements and real-user p75 when traffic is sufficient.
   The contrast scan forces off-screen project cards to render so deferred-paint
   background sampling cannot conceal or falsely report their colours; contrast
   rules remain enabled and production rendering behaviour is unchanged.
+  Any remaining off-screen contrast report is rechecked with the same rule
+  after scrolling that exact node into view. Missing loading placeholders are
+  not skipped: their replacement dashboard is checked. A visible failure still
+  fails CI; structural/accessibility failures always fail immediately.
 - Added `test:browser` to run responsive landing, loading, service, article,
   Cashflow, usability and accessibility checks against a production build.
 - CI installs Chromium, Firefox and WebKit, runs the browser suite and audits

@@ -49,6 +49,9 @@ measurements and real-user p75 when traffic is sufficient.
   after scrolling that exact node into view. Missing loading placeholders are
   not skipped: their replacement dashboard is checked. A visible failure still
   fails CI; structural/accessibility failures always fail immediately.
+  Full-page audit visits also settle their network requests before the next
+  navigation, avoiding cancelled RSC-prefetch access-control errors in WebKit.
+  No browser page errors are suppressed or filtered.
 - Added `test:browser` to run responsive landing, loading, service, article,
   Cashflow, usability and accessibility checks against a production build.
 - CI installs Chromium, Firefox and WebKit, runs the browser suite and audits

@@ -21,6 +21,10 @@ const axePath = process.env.AXE_SCRIPT || require.resolve('axe-core/axe.min.js')
       page.on('pageerror', error => errors.push(error.message));
       for (const route of routes) {
         await page.goto(`${base}${route}`);
+        // Full-page test navigation must not cancel the previous visit's RSC
+        // prefetch. WebKit can surface those cancellations as access-control
+        // page errors. This is a network-settlement check, not UI readiness.
+        await page.waitForLoadState('networkidle');
         await page.locator('main').waitFor();
         assert.equal(await page.locator('h1').count(), 1, `Single page heading: ${route}`);
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Overflow: ${route}`);
@@ -57,6 +61,7 @@ const axePath = process.env.AXE_SCRIPT || require.resolve('axe-core/axe.min.js')
         if (violations.length) console.log(`PASS ${engine} ${width}px ${route}: every off-screen contrast report revalidated in viewport`);
       }
       await page.goto(base);
+      await page.waitForLoadState('networkidle');
       const decline = page.getByRole('button', { name: 'Decline', exact: true });
       if (await decline.isVisible()) await decline.click();
       // Keyboard activation, visible focus and a route past the optional intro.

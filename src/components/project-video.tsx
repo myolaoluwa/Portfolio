@@ -205,7 +205,9 @@ export function ProjectVideo({
           <video
             ref={fullVideo}
             id={`${project}-showcase-video`}
-            poster={`/media/${project}-poster.jpg`}
+            // Hidden dialogs otherwise download their full-size posters even
+            // with preload="none". The card has its own lazy optimised image.
+            poster={opened ? `/media/${project}-poster.jpg` : undefined}
             controls
             playsInline
             preload="none"

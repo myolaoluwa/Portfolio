@@ -838,6 +838,69 @@ summary {
   .cinema-bottomline { bottom: 12px; }
 }
 .cinema-opening-copy { animation: none; }
+.cinema-preview-loading {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 10px/1.5 var(--mono);
+  text-align: center;
+}
+
+/* The opening illustration must not compete with the offer on a narrow screen.
+   Real project phones remain visible in the following tour chapters. */
+@media (max-width: 700px) {
+  .cinema-scene-0 .cinema-device-wrap { display: none; }
+}
+@media (max-width: 700px) and (min-height: 501px) {
+  /* Allocate the remaining stage height to the phone after the copy. Fixed
+     bottom offsets caused collisions on intermediate-height Android screens. */
+  .cinema-stage:not(.cinema-scene-0) {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(103px, 16svh, 135px) 22px 76px 43px;
+  }
+  .cinema-stage:not(.cinema-scene-0) .cinema-copy {
+    position: static;
+    width: auto;
+    flex: none;
+    transform: none;
+  }
+  .cinema-stage:not(.cinema-scene-0) .cinema-device-wrap {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: 170px;
+    flex: 1;
+    min-height: 0;
+    margin-top: 24px;
+    align-self: flex-end;
+    container-type: size;
+  }
+  .cinema-stage:not(.cinema-scene-0) .cinema-device-camera {
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  @supports (width: 1cqh) {
+    .cinema-stage:not(.cinema-scene-0) .cinema-phone {
+      width: min(170px, 51cqh);
+    }
+  }
+}
+
+/* Let browsers defer expensive off-screen project layout/paint. Content stays
+   in the document for links, search, assistive technology and no-JS access. */
+.featured-project {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 900px;
+}
+@media (max-width: 700px) {
+  .featured-project { contain-intrinsic-block-size: auto 1500px; }
+}
 
 /* Retain the coral accent; deepen text on the light surfaces for contrast. */
 .section-heading p,

@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ProjectVideo } from "@/components/project-video";
 import { ContactPanel } from "@/components/contact-panel";
 import { PlayStoreLink, ProjectContext } from "@/components/studio-trust";
-import { MobileDashboardPreview } from "@/components/mobile-dashboard-preview";
 import { DeferredDashboard } from "@/components/deferred-dashboard";
 import {
   ArrowDown,
@@ -18,6 +18,12 @@ import {
   Menu,
   X,
 } from "lucide-react";
+
+// These detailed interfaces are only needed after entering the project tour.
+const MobileDashboardPreview = dynamic(
+  () => import("./mobile-dashboard-preview").then(module => module.MobileDashboardPreview),
+  { loading: () => <div className="cinema-preview-loading" role="status">Loading project preview…</div> },
+);
 
 const cinematicChapters = [
   {
@@ -151,10 +157,12 @@ function CinematicPhone({ scene }: { scene: number }) {
 function CinematicIntro({
   activeScene,
   portraitActive,
+  studioRequested,
   onChapterSelect,
 }: {
   activeScene: number;
   portraitActive: boolean;
+  studioRequested: boolean;
   onChapterSelect: (index: number) => void;
 }) {
   const chapter =
@@ -229,17 +237,18 @@ function CinematicIntro({
                 fill
                 sizes="106vw"
                 preload
+                quality={65}
                 className="cinema-opening-image"
               />
             )}
           </div>
           <div className="cinema-studio">
-            <Image
+            {studioRequested && <Image
               src="/media/myolaoluwa-studio.webp"
               alt=""
               fill
               sizes="(max-width: 700px) 100vw, 106vw"
-            />
+            />}
           </div>
           <div className="cinema-depth-light" />
           <div className="cinema-atmosphere" />
@@ -426,6 +435,7 @@ export default function PortfolioExperience({ services, engagement, insights }: 
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeScene, setActiveScene] = useState(0);
   const [portraitActive, setPortraitActive] = useState(false);
+  const [studioRequested, setStudioRequested] = useState(false);
   const [cinemaVisible, setCinemaVisible] = useState(true);
   const headerRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLButtonElement>(null);
@@ -477,6 +487,10 @@ export default function PortfolioExperience({ services, engagement, insights }: 
         Math.max(0, nextProgress * cinematicChapters.length * 4 - 0.35),
       );
       track.style.setProperty("--studio-reveal", String(studioReveal));
+      // Start the portrait transfer as its scroll reveal begins, not while
+      // hidden behind the first frame. Keep it cached when scrolling back.
+      if (studioReveal > 0 && nextProgress < 1 / cinematicChapters.length)
+        setStudioRequested(true);
       // Change the message as the portrait becomes the dominant composition.
       // Scrolling back restores the opening copy at the same threshold.
       setPortraitActive(studioReveal >= 0.5);
@@ -572,6 +586,7 @@ export default function PortfolioExperience({ services, engagement, insights }: 
       <CinematicIntro
         activeScene={activeScene}
         portraitActive={portraitActive}
+        studioRequested={studioRequested}
         onChapterSelect={jumpToChapter}
       />
 

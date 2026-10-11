@@ -19,6 +19,7 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
     await page.locator('#services').waitFor();
     await page.locator('[data-deferred-project="elara"] figure').waitFor({ state: 'attached' });
     console.log('PASS interface previews without IntersectionObserver');
+    assert.equal(await page.locator('track').count(), 0, 'Unopened films must not load caption tracks');
     for (const film of await page.locator('.project-film').all()) {
       const trigger = film.locator('.project-film-card');
       await trigger.hover();
@@ -26,11 +27,27 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
       await trigger.click();
       await film.locator('dialog[open]').waitFor();
       await film.getByRole('status').filter({ hasText: 'The video could not load' }).waitFor();
+      if (await film.locator('#elara-showcase-video').count()) {
+        await page.waitForFunction(() => {
+          const track = document.querySelector('#elara-showcase-video track');
+          return track?.readyState === 2 && track.track.cues?.length === 7;
+        });
+        const track = film.locator('track');
+        assert.equal(await track.getAttribute('kind'), 'captions');
+        assert.equal(await track.getAttribute('srclang'), 'en');
+        assert.equal(await track.evaluate(element => element.track.mode), 'showing');
+        await track.evaluate(element => { element.track.mode = 'disabled'; });
+        assert.equal(await track.evaluate(element => element.track.mode), 'disabled');
+        await track.evaluate(element => { element.track.mode = 'showing'; });
+      } else {
+        assert.equal(await film.locator('track').count(), 0, 'Nomi has no spoken narration');
+      }
       await film.getByRole('button', { name: 'Close video preview' }).click();
       await page.waitForFunction(() => !document.querySelector('dialog[open]') && document.body.style.overflow !== 'hidden');
       assert.equal(await trigger.evaluate(button => document.activeElement === button), true);
     }
     console.log('PASS reduced-motion hover, announced media errors, close/focus/scroll restoration');
+    console.log('PASS Elara English caption loading and selection; no caption requests before opening');
     // CSS zoom exercises enlarged-content reflow; it is not a substitute for
     // browser zoom or a physical-device accessibility review.
     for (const route of ['/', '/services/web-applications', '/work/elara', '/privacy']) {

@@ -6,6 +6,23 @@ The Elara and Cashflow case studies and Oracle and Nomi product walkthroughs are
 
 Olaoluwa confirmed that both products are finished products with real users and requested descriptions without numbers. No user counts, testimonials, measured business outcomes, project durations, or sole-contributor credits are inferred. “Work covered” describes implementation scope, not verified team attribution.
 
+### Updated release status — October 11, 2026
+
+Olaoluwa clarified that Cashflow's Android app is currently in Google Play
+closed testing. The homepage and case study now distinguish this from a
+public store release, while retaining the existing web-app link. The expected
+14-day release window is not published as a guarantee or a confirmed date.
+The Google Play button remains hidden until a live, owner-approved listing is
+supplied. This is owner-confirmed status, not an inspection of Play Console.
+
+Added a compact homepage proof summary and an account-free project evidence
+summary to all four case-study/walkthrough pages. These reuse the documented
+capabilities and ownership facts below. Adoption is attributed to DelighTech;
+Oracle/Nomi previews do not inherit adoption claims. Functionality is clearly
+distinguished from measured outcomes or an independent security audit. Genuine
+quotes, named collaborator contributions and documented outcomes remain behind
+the existing verification/publication gates; no empty testimonial cards appear.
+
 ## Implementation sources inspected
 
 ### Elara

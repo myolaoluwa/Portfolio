@@ -176,6 +176,7 @@ export function ProjectVideo({
       </button>
       <span className="project-film-hint">
         Click to watch with sound. Hover previews stay muted.
+        {project === "elara" && " English captions available in the player."}
       </span>
       <dialog
         ref={dialog}
@@ -241,7 +242,17 @@ export function ProjectVideo({
               setSoundOn(!video.muted && video.volume > 0);
             }}
             aria-label={`${title} full project showcase`}
-          />
+          >
+            {opened && project === "elara" && (
+              <track
+                kind="captions"
+                src="/media/elara-captions.en.vtt"
+                srcLang="en"
+                label="English"
+                default
+              />
+            )}
+          </video>
           <p id={`${project}-film-description`} role="status">
             {failed
               ? "The video could not load. Please close the preview and try again."

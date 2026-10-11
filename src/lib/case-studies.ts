@@ -126,7 +126,7 @@ export const caseStudies: Record<CaseStudy["slug"], CaseStudy> = {
   },
   cashflow: {
     slug: "cashflow",
-    status: "Finished product · Used by real users",
+    status: "Google Play closed testing · Web app available",
     mobileScene: 3,
     name: "Cashflow",
     number: "02",
@@ -193,7 +193,7 @@ export const caseStudies: Record<CaseStudy["slug"], CaseStudy> = {
     ],
     result: {
       title: "A clear route from business workspace to financial entry.",
-      body: "Cashflow is a finished product used by real users. It brings cashbooks, entries, member access, and financial policies into a responsive product. The desktop and mobile previews in this case study show how the same workflow is presented at different screen sizes.",
+      body: "Cashflow brings cashbooks, entries, member access, and financial policies into a responsive product used by real users. Its Android app is currently in Google Play closed testing; a public store release is not yet available. The desktop and mobile previews show how the workflow is presented at different screen sizes.",
       capabilities: [
         "Separate cashbooks with balances and member context",
         "Permission-scoped access to books and entry operations",
@@ -201,7 +201,7 @@ export const caseStudies: Record<CaseStudy["slug"], CaseStudy> = {
       ],
     },
     boundaries:
-      "Real-user usage is described without numbers. The source repository is private, and the previews contain illustrative records rather than customer finances. This case study covers the web and Android implementation; no app-store release or measured business-impact claims are presented here.",
+      "Real-user usage and Google Play closed-testing status are confirmed by DelighTech, without user counts or measured business-impact claims. The source repository is private, and previews use illustrative records rather than customer finances. Public Google Play availability will be added after release and verification of the listing; no launch date is guaranteed here.",
     liveUrl: "https://cashflow-delight12.vercel.app",
     next: { name: "Oracle", href: "/work/oracle" },
   },

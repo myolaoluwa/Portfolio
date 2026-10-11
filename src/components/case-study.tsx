@@ -14,6 +14,7 @@ import {
   ApprovedEvidence,
   PlayStoreLink,
   ProjectContext,
+  ProjectProof,
 } from "./studio-trust";
 import { BreadcrumbData } from "./structured-data";
 import { serviceOffers } from "@/lib/services";
@@ -121,6 +122,7 @@ export function CaseStudy({ study }: { study: Study }) {
             </a>
           ))}
         </nav>
+        <ProjectProof study={study} />
         <section
           id="challenge"
           className={styles.section}

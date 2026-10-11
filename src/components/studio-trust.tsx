@@ -7,6 +7,74 @@ import {
 import styles from "./studio-trust.module.css";
 import { ArrowUpRight } from "lucide-react";
 import { getPublishedTeam } from "@/lib/studio-team";
+import Link from "next/link";
+import type { CaseStudy } from "@/lib/case-studies";
+
+export function SelectedWorkProof() {
+  return (
+    <aside className={styles.workProof} aria-label="Selected work and ownership">
+      <div>
+        <span className={styles.eyebrow}>PRODUCTS IN USE</span>
+        <p>
+          <Link href="/work/elara">Elara</Link> and{" "}
+          <Link href="/work/cashflow">Cashflow</Link> are used by real users,
+          as confirmed by DelighTech. Cashflow’s Android app is in Google Play
+          closed testing.
+        </p>
+      </div>
+      <div>
+        <span className={styles.eyebrow}>CLEAR OWNERSHIP</span>
+        <p>
+          Cashflow and BizFlow are DelighTech-owned products. Elara, Oracle and
+          Nomi are collaborative builds. Each story separates demonstrated
+          functionality from measured business results.
+        </p>
+      </div>
+    </aside>
+  );
+}
+
+export function ProjectProof({ study }: { study: CaseStudy }) {
+  const walkthrough = study.format === "walkthrough";
+  return (
+    <aside className={styles.proof} aria-labelledby="project-proof-title">
+      <div className={styles.proofHeading}>
+        <span className={styles.eyebrow}>PROJECT EVIDENCE</span>
+        <h2 id="project-proof-title">What you can inspect.</h2>
+        <p>
+          Product functionality, interface previews and the decisions behind
+          the build—without needing an account.
+        </p>
+      </div>
+      <div className={styles.proofGrid}>
+        <div>
+          <h3>Delivery & ownership</h3>
+          <p>{study.status}</p>
+          <p>{getProjectOriginLabel(study.slug)}</p>
+          <span className={styles.proofNote}>
+            {walkthrough
+              ? "A guided product preview, not a claim of user adoption."
+              : "Product usage and release status confirmed by DelighTech; no usage figures published."}
+          </span>
+        </div>
+        <div>
+          <h3>Demonstrated functionality</h3>
+          <ul>{study.result.capabilities.map(capability => <li key={capability}>{capability}</li>)}</ul>
+          <a href="#product">Inspect the workflow <ArrowUpRight size={15} aria-hidden="true" /></a>
+        </div>
+        <div>
+          <h3>Implementation decisions</h3>
+          <p>Read how the product’s constraints shaped its interface and implementation.</p>
+          <span className={styles.proofNote}>
+            Previews use sample data. Functionality is not evidence of measured
+            time savings, revenue gains or an independent security audit.
+          </span>
+          <a href="#decisions">Explore the decisions <ArrowUpRight size={15} aria-hidden="true" /></a>
+        </div>
+      </div>
+    </aside>
+  );
+}
 
 export function StudioTeam() {
   const members = getPublishedTeam();

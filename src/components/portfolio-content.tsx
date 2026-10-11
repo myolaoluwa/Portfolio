@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProjectVideo } from "@/components/project-video";
 import { ContactPanel } from "@/components/contact-panel";
-import { PlayStoreLink, ProjectContext } from "@/components/studio-trust";
+import { PlayStoreLink, ProjectContext, SelectedWorkProof } from "@/components/studio-trust";
 import { DeferredDashboard } from "@/components/deferred-dashboard";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, CodeXml, MapPin } from "lucide-react";
 
@@ -107,6 +107,7 @@ export function PortfolioContent({ services, engagement, insights }: {
             imagine what we could build for your business.
           </p>
         </div>
+        <SelectedWorkProof />
         <article className="featured-project elara-project">
           <div className="feature-copy">
             <div className="project-kicker">
@@ -219,7 +220,7 @@ export function PortfolioContent({ services, engagement, insights }: {
             <span>03</span>
             <span>FINTECH · WEB + MOBILE APP</span>
             <span className="status-chip status-prototype">
-              FINISHED PRODUCT
+              GOOGLE PLAY CLOSED TESTING
             </span>
           </div>
           <div className="feature-title-row">

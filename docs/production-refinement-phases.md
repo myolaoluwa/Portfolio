@@ -79,11 +79,24 @@ Current Playwright bundled browsers cannot install on this Mac's OS version.
 Local Chromium checks use installed Chrome; CI performs Firefox/WebKit checks.
 WebKit emulation does **not** prove a physical iPhone/Safari pass.
 
-Remaining human checks: physical iPhone/Android, VoiceOver/TalkBack, browser
-zoom and meaningful video audio review. Both showcase files contain AAC audio
-(Elara ~23 s, Nomi ~43 s), but this does not establish whether they contain
-speech. The owner has been asked to confirm/provide transcripts. No invented
-captions or blanket WCAG certification are published.
+Remaining human checks: physical iPhone/Android, VoiceOver/TalkBack and browser
+zoom. Audio analysis of both full showcase clips found English narration in
+Elara (~23 s); Nomi (~43 s) had no detected spoken sections. Two local speech
+recognition models agreed on Elara's wording, with the larger model also
+confirming the correct product spelling. Word timestamps informed seven
+readable WebVTT cues. This was automated transcription/alignment, not a human
+listening review or blanket WCAG certification.
+
+Elara now includes a native selectable English caption track, enabled by
+default when its dialog opens and removable through the player controls.
+The track is not mounted before opening, avoiding initial caption requests;
+audible click playback and muted hover previews are unchanged. Nomi has no
+fabricated dialogue captions. Unit tests validate cue syntax, order, duration
+and reading speed; browser tests verify loading and selectable track modes.
+Installed Chrome additionally played the actual clip at mobile width: all
+seven cue midpoints activated the expected text, sound remained unmuted at
+full volume, and the caption/player screenshot was reviewed. Caption wording
+and alignment should still receive a final human listening review.
 
 `npm audit --omit=dev` reports zero known production vulnerabilities. Full
 audit reports five development-only dependency entries caused by the braces

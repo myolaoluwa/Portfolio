@@ -53,3 +53,16 @@ test("store links stay absent until approved and reject lookalikes", () => {
     assert.equal(evidence.getApprovedPlayStoreUrl("cashflow"), null);
   }
 });
+
+test("Cashflow distinguishes closed testing from a public Google Play release", () => {
+  const { caseStudies } = moduleFrom("src/lib/case-studies.ts");
+  const cashflow = caseStudies.cashflow;
+  assert.match(cashflow.status, /Google Play closed testing/);
+  assert.match(cashflow.result.body, /public store release is not yet available/);
+  assert.match(cashflow.boundaries, /no launch date is guaranteed/);
+  assert.equal(/14 days|October 25|store-approved/i.test(JSON.stringify(cashflow)), false);
+  for (const slug of ['oracle', 'nomi']) {
+    assert.equal(caseStudies[slug].format, 'walkthrough');
+    assert.doesNotMatch(caseStudies[slug].status, /real users|finished product/i);
+  }
+});

@@ -62,6 +62,76 @@
   overflow-wrap: anywhere;
 }
 
+.workProof {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  margin: 0 0 32px;
+  padding: 24px;
+  border: 1px solid #ccd4c9;
+  background: #e5e9de;
+  color: var(--ink);
+}
+
+.workProof p,
+.proof p {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.workProof a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 600;
+}
+
+.proof {
+  margin: 36px 0 56px;
+  padding: 28px;
+  border: 1px solid #ccd4c9;
+  background: #e5e9de;
+  color: var(--ink);
+}
+
+.proofHeading h2 {
+  margin: 10px 0 0;
+  font: 600 27px/1.2 var(--display);
+}
+
+.proofGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #ccd4c9;
+}
+
+.proofGrid > div { min-width: 0; }
+.proofGrid h3 { margin: 0; font: 600 16px/1.4 var(--display); }
+.proofGrid ul { margin: 12px 0; padding-left: 18px; font-size: 14px; line-height: 1.75; }
+.proofGrid li + li { margin-top: 8px; }
+.proofNote { display: block; margin-top: 12px; color: #4f5d52; font-size: 12px; line-height: 1.7; }
+.proofGrid a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.workProof a:focus-visible,
+.proofGrid a:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+
+@media (max-width: 900px) {
+  .proofGrid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .proofGrid > div + div { border-top: 1px solid #ccd4c9; padding-top: 24px; }
+}
+
 .evidence {
   margin: 40px 0;
   padding-top: 30px;
@@ -107,6 +177,9 @@
 }
 
 @media (max-width: 700px) {
+  .workProof { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .workProof > div + div { padding-top: 20px; border-top: 1px solid #ccd4c9; }
+  .proof { padding: 22px; }
   .team {
     grid-template-columns: minmax(0, 1fr);
     gap: 18px;

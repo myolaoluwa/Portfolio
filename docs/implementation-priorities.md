@@ -31,7 +31,7 @@ Short, narrow screens use a smaller opening phone to protect the new links; othe
 
 Verification: lint, seven unit tests, production build and six-route production checks passed. The responsive chapter/navigation/video audit passed all 11 screen sizes. All four enquiry sections passed link/overflow/automated axe A/AA checks at 320, 390 and 1440px. Separate 320×568, 667×375 and 844×390 checks confirmed opening controls are unobscured and portrait copy clears the bottom controls. Desktop/mobile opening screenshots were visually reviewed. Automated tests do not establish full accessibility or real-device performance; owner visual review remains the next gate.
 
-## 3. Genuine proof and studio credibility — publication system ready; owner content needed
+## 3. Genuine proof and studio credibility — implementation proof and publication system ready; owner evidence needed
 
 - Publish approved team roles, collaboration credits, feedback and documented project outcomes.
 - Add verified Google Play URLs for Cashflow/BizFlow.
@@ -48,6 +48,33 @@ This is partial Phase 3 implementation, not completion of its credibility object
 Verification: lint, all 11 unit tests, production build and all six public route checks passed. The updated studio panel passed identity, overflow and automated axe A/AA checks at 320, 390 and 1440px; its mobile screenshot was visually inspected. No full responsive audit rerun is claimed for this small panel-only change.
 
 Owner follow-up: additional team profiles were deferred after review; only the confirmed CEO profile remains public. Other team profiles and third-party proof remain pending.
+
+### Credibility refinement — October 11, 2026
+
+Added a concise selected-work proof summary to the homepage and a server-rendered
+evidence snapshot to each of the four case-study/walkthrough pages. Visitors can
+quickly assess delivery status, studio ownership versus collaborative builds,
+demonstrated functionality and implementation decisions, then follow direct
+workflow/decision links without signing in. These reuse the already inspected
+implementation notes; no new security audit, sole-contributor credit, business
+metric or testimonial is claimed. Additional team identities remain unpublished
+as requested. Missing approved evidence does not produce public placeholder cards.
+
+Owner clarified that Cashflow's Android app is in Google Play closed testing.
+Updated the homepage badge, case-study status, result and evidence boundaries.
+The expected 14-day window is not published as a guaranteed release date. The
+web-product link remains available and the Google Play button remains hidden
+until the actual listing is supplied and approved.
+
+Verification: lint, 18 unit tests, production build and 14 public-route release
+checks pass. The new proof audit passes all four pages at 320/768/1440px,
+including working evidence anchors, ownership/status wording, absent unapproved
+store links, overflow and no-JavaScript access. The Chromium accessibility audit
+passes all 14 routes at 393/1440px with no automated A/AA violations, including
+keyboard skip and video focus/Escape checks. Mobile/desktop proof screenshots
+were reviewed. Third-party validation, approved quotes, named collaboration
+credits and measured outcomes remain owner-supplied publication requirements,
+not completed work. Changes are local; no commit, push or deployment in this pass.
 
 ## 4. Search acquisition and international positioning — implemented locally; launch review pending
 

@@ -18,8 +18,8 @@ export function SelectedWorkProof() {
         <p>
           <Link href="/work/elara">Elara</Link> and{" "}
           <Link href="/work/cashflow">Cashflow</Link> are used by real users,
-          as confirmed by DelighTech. Cashflow’s Android app is in Google Play
-          closed testing.
+          as confirmed by DelighTech. Cashflow’s Android app is now available on
+          Google Play.
         </p>
       </div>
       <div>

@@ -42,7 +42,8 @@ test("approved ownership distinguishes studio products from collaborations", () 
 
 test("store links stay absent until approved and reject lookalikes", () => {
   const evidence = moduleFrom("src/lib/project-evidence.ts");
-  assert.equal(evidence.getApprovedPlayStoreUrl("cashflow"), null);
+  assert.equal(evidence.getApprovedPlayStoreUrl("cashflow"), "https://play.google.com/store/apps/details?id=biz.cashflowapp.mobile");
+  assert.equal(evidence.getApprovedPlayStoreUrl("bizflow"), null);
   const valid = "https://play.google.com/store/apps/details?id=com.example.test";
   evidence.projectStoreLinks.cashflow = { googlePlayUrl: valid, approved: false };
   assert.equal(evidence.getApprovedPlayStoreUrl("cashflow"), null);
@@ -54,12 +55,13 @@ test("store links stay absent until approved and reject lookalikes", () => {
   }
 });
 
-test("Cashflow distinguishes closed testing from a public Google Play release", () => {
+test("Cashflow reflects its verified public Google Play release without impact claims", () => {
   const { caseStudies } = moduleFrom("src/lib/case-studies.ts");
   const cashflow = caseStudies.cashflow;
-  assert.match(cashflow.status, /Google Play closed testing/);
-  assert.match(cashflow.result.body, /public store release is not yet available/);
-  assert.match(cashflow.boundaries, /no launch date is guaranteed/);
+  assert.match(cashflow.status, /Available on Google Play/);
+  assert.match(cashflow.result.body, /Cashflow: Business Cashbook, published by DelighTech/);
+  assert.match(cashflow.boundaries, /November 2, 2026/);
+  assert.doesNotMatch(JSON.stringify(cashflow), /closed testing|not yet available|no app-store release/);
   assert.equal(/14 days|October 25|store-approved/i.test(JSON.stringify(cashflow)), false);
   for (const slug of ['oracle', 'nomi']) {
     assert.equal(caseStudies[slug].format, 'walkthrough');

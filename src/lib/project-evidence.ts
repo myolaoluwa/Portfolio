@@ -18,7 +18,10 @@ export const projectOrigins: Record<ProjectId, ProjectOrigin> = {
 export const projectStoreLinks: Partial<
   Record<ProjectId, { googlePlayUrl: string | null; approved: boolean }>
 > = {
-  cashflow: { googlePlayUrl: null, approved: false },
+  cashflow: {
+    googlePlayUrl: "https://play.google.com/store/apps/details?id=biz.cashflowapp.mobile",
+    approved: true,
+  },
   bizflow: { googlePlayUrl: null, approved: false },
 };
 

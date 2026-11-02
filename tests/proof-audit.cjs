@@ -23,8 +23,10 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
           await link.click({ trial: true });
         }
         if (project === 'cashflow') {
-          assert.match(await proof.innerText(), /Google Play closed testing/);
-          assert.equal(await page.locator('a[href*="play.google.com"]').count(), 0);
+          assert.match(await proof.innerText(), /Available on Google Play/);
+          const store = page.locator('a[href="https://play.google.com/store/apps/details?id=biz.cashflowapp.mobile"]');
+          assert.equal(await store.count(), 1);
+          await store.click({ trial: true });
         }
         if (process.env.AUDIT_SCREENSHOTS && project === 'cashflow') await proof.screenshot({ path: `${process.env.AUDIT_SCREENSHOTS}/project-proof-${width}.png` });
         console.log(`PASS ${project} evidence summary ${width}px: status, ownership, boundaries, working anchors`);
@@ -33,7 +35,8 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
     }
     const page = await browser.newPage({ javaScriptEnabled: false });
     await page.goto(base);
-    assert.match(await page.getByRole('complementary', { name: 'Selected work and ownership' }).innerText(), /closed testing/);
+    assert.match(await page.getByRole('complementary', { name: 'Selected work and ownership' }).innerText(), /now available on\s+Google Play/);
+    assert.equal(await page.locator('a[href="https://play.google.com/store/apps/details?id=biz.cashflowapp.mobile"]').count(), 1);
     await page.goto(`${base}/work/cashflow`);
     assert.match(await page.getByRole('complementary', { name: 'What you can inspect.' }).innerText(), /DelighTech-owned product/);
     console.log('PASS project proof remains readable without JavaScript');

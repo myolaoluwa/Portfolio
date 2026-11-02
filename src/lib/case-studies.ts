@@ -126,7 +126,7 @@ export const caseStudies: Record<CaseStudy["slug"], CaseStudy> = {
   },
   cashflow: {
     slug: "cashflow",
-    status: "Google Play closed testing · Web app available",
+    status: "Available on Google Play · Web app available",
     mobileScene: 3,
     name: "Cashflow",
     number: "02",
@@ -188,12 +188,12 @@ export const caseStudies: Record<CaseStudy["slug"], CaseStudy> = {
         implementation:
           "Mobile uses a workspace selector, a list-first book view, search/filter controls, a floating add-book action, and Cashbooks / Help / Settings navigation. The Android project uses Capacitor to host the web experience with device integrations.",
         value:
-          "The mobile layout retains the cashbook model while changing navigation and action placement. The repository contains an Android project; no app-store release is claimed here.",
+          "The mobile layout retains the cashbook model while changing navigation and action placement. The Capacitor-based Android app is available on Google Play as Cashflow: Business Cashbook.",
       },
     ],
     result: {
       title: "A clear route from business workspace to financial entry.",
-      body: "Cashflow brings cashbooks, entries, member access, and financial policies into a responsive product used by real users. Its Android app is currently in Google Play closed testing; a public store release is not yet available. The desktop and mobile previews show how the workflow is presented at different screen sizes.",
+      body: "Cashflow brings cashbooks, entries, member access, and financial policies into a responsive product used by real users. Its Android app is available on Google Play as Cashflow: Business Cashbook, published by DelighTech. The desktop and mobile previews show how the workflow is presented at different screen sizes.",
       capabilities: [
         "Separate cashbooks with balances and member context",
         "Permission-scoped access to books and entry operations",
@@ -201,7 +201,7 @@ export const caseStudies: Record<CaseStudy["slug"], CaseStudy> = {
       ],
     },
     boundaries:
-      "Real-user usage and Google Play closed-testing status are confirmed by DelighTech, without user counts or measured business-impact claims. The source repository is private, and previews use illustrative records rather than customer finances. Public Google Play availability will be added after release and verification of the listing; no launch date is guaranteed here.",
+      "Real-user usage is confirmed by DelighTech, without user counts or measured business-impact claims. The public Google Play listing was verified on November 2, 2026. The source repository is private, and previews use illustrative records rather than customer finances; they may differ from the current store version. Installation availability depends on Google Play’s device and regional requirements.",
     liveUrl: "https://cashflow-delight12.vercel.app",
     next: { name: "Oracle", href: "/work/oracle" },
   },

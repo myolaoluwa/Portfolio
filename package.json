@@ -23,7 +23,7 @@
     "test:operations": "node scripts/operations-check.mjs"
   },
   "dependencies": {
-    "lucide-react": "^1.49.0",
+    "lucide-react": "^1.65.0",
     "next": "16.4.4",
     "react": "19.2.8",
     "react-dom": "19.2.8"

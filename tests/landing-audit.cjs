@@ -13,7 +13,10 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
   try {
     for (const [width, height] of [[320,568],[375,667],[393,740],[390,844],[430,932],[540,940],[700,900],[768,1024],[1024,768],[1440,900],[1920,1080],[844,390],[667,375]]) {
       const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'reduce' });
-      await context.route('https://cloud.umami.is/**', route => route.abort());
+      // Layout checks use a saved decline; consent behaviour has its own audit.
+      // The prompt hydrates asynchronously and must not race chapter controls.
+      await context.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
+      await context.route('**/api/send', route => route.abort());
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));

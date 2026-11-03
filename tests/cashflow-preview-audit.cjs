@@ -8,7 +8,6 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
   try {
     for (const width of [320, 390, 430, 700, 768, 1024, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-      await page.route('https://cloud.umami.is/**', route => route.abort());
       await page.route('**/api/send', route => route.abort());
       for (const route of ['/', '/work/cashflow']) {
         await page.goto(`${base}${route}`);

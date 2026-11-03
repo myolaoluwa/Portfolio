@@ -8,8 +8,8 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
   const browser = await browserType.launch({ headless: true, ...(engine === 'chromium' && process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
   try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
-    await context.route('https://cloud.umami.is/**', route => route.abort());
     await context.route('**/api/send', route => route.abort());
+    await context.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
     await context.route('**/*-showcase.mp4', route => route.abort());
     await context.addInitScript(() => { window.IntersectionObserver = undefined; });
     const page = await context.newPage();

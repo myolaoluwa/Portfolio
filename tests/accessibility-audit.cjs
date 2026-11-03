@@ -15,7 +15,7 @@ const axePath = process.env.AXE_SCRIPT || require.resolve('axe-core/axe.min.js')
     assert.ok(routes.includes('/') && routes.includes('/privacy') && routes.length >= 14);
     for (const width of [393, 1440]) {
       const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-      await context.route('https://cloud.umami.is/**', route => route.abort());
+      await context.route('**/api/send', route => route.abort());
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));

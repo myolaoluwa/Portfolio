@@ -20,6 +20,40 @@ Olaoluwa confirmed `https://delightech.net` as the production domain.
 
 ## Optional analytics — configuration-dependent
 
+### November 2, 2026 configuration repair
+
+The ignored local configuration contained a malformed website UUID. It was
+corrected using the website ID previously supplied by the owner. Both public
+analytics variables were also added to the existing Vercel production project,
+using Umami Cloud's current documented collector,
+`https://gateway.umami.is/api/send`. No account API key is required or published.
+These settings take effect only in a new build; adding them does not activate
+analytics in an already deployed bundle. No deployment was performed as part
+of this repair. Provider-dashboard ingestion must still be checked after the
+approved release and a genuine consented visit.
+
+Browser audits now intercept `/api/send` independently of the collector host,
+so changing provider endpoints cannot send test records to the real dashboard.
+Consent, withdrawal, DNT and GPC handling are preserved.
+
+Next.js and `eslint-config-next` were upgraded together from 16.3.8 to 16.4.4
+to address the October Next.js advisories. The runtime-only npm audit reports
+zero known vulnerabilities after this change. The full development-tool audit
+still reports minimatch-related moderate entries and a development-only Zod
+high-severity entry. They are not part of the runtime audit; do not use
+`npm audit fix --force` to downgrade the current framework/lint configuration.
+Review those tooling updates separately.
+
+Verification on November 2: production build, lint, 23 unit tests and all 14
+route/metadata checks passed. Installed-Chrome browser audits passed landing
+layouts at 13 sizes, mobile loading, services, Insights, Cashflow previews,
+project proof, configured consent/LCP/withdrawal, usability and axe A/AA on all
+14 routes at 393px and 1440px. Separate configured-browser checks confirmed DNT
+and GPC suppress collection even with saved consent. Collectors were mocked or
+blocked throughout. The real gateway accepted a CORS preflight from the
+production origin, but no event was submitted and account ingestion is not yet
+verified. This run did not repeat Firefox/WebKit or physical-device testing.
+
 The performance-measurement refinement also reports consented LCP/INP/CLS samples through
 this adapter. It rechecks permission at transmission, minimises event data and
 does not send metric IDs or performance-entry details. See
@@ -33,7 +67,7 @@ The optional adapter speaks the documented Umami `/api/send` event format: https
 To enable a compatible collector, copy the relevant blank fields from `.env.example` into your deployment configuration, configure these environment variables, and rebuild:
 
 ```dotenv
-NEXT_PUBLIC_ANALYTICS_COLLECT_URL=https://YOUR-ANALYTICS-HOST/api/send
+NEXT_PUBLIC_ANALYTICS_COLLECT_URL=https://gateway.umami.is/api/send
 NEXT_PUBLIC_ANALYTICS_WEBSITE_ID=YOUR-UMAMI-WEBSITE-UUID
 ```
 

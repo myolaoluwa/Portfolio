@@ -9,6 +9,7 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
     for (const width of [320, 768, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
       await page.route('**/api/send', route => route.abort());
+      await page.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
       for (const project of ['elara', 'cashflow', 'oracle', 'nomi']) {
         await page.goto(`${base}/work/${project}`);
         const proof = page.getByRole('complementary', { name: 'What you can inspect.' });

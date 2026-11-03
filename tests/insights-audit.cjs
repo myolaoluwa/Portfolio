@@ -7,7 +7,8 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
   try {
     for (const width of [320, 390, 768, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
-      await page.route('https://cloud.umami.is/**', route => route.abort());
+      await page.route('**/api/send', route => route.abort());
+      await page.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
       await page.goto(`${base}/insights`);
       assert.equal(await page.locator('h1').count(), 1);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);

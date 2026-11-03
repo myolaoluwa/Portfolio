@@ -11,6 +11,7 @@ const slugs = ['business-websites', 'web-applications', 'mobile-apps', 'ongoing-
       const context = await browser.newContext({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
       // Automated visits must never write real analytics records.
       await context.route('**/api/send', route => route.abort());
+      await context.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));

@@ -6,7 +6,8 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
   const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
   try {
     const page = await browser.newPage({ viewport: { width: 393, height: 740 }, reducedMotion: 'reduce', isMobile: true, hasTouch: true });
-    await page.route('https://cloud.umami.is/**', route => route.abort());
+    await page.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
+    await page.route('**/api/send', route => route.abort());
     const requests = [];
     page.on('request', request => requests.push(decodeURIComponent(request.url())));
     await page.goto(base);
@@ -54,7 +55,8 @@ const base = process.env.BASE_URL || 'http://localhost:3000';
     if (process.env.AUDIT_SCREENSHOTS) await page.screenshot({ path: `${process.env.AUDIT_SCREENSHOTS}/mobile-project-fixed.png` });
     for (const [width, height] of [[320, 568], [393, 740]]) {
       const fallback = await browser.newPage({ viewport: { width, height }, reducedMotion: 'reduce', isMobile: true });
-      await fallback.route('**/*', route => route.request().resourceType() === 'font' || route.request().url().startsWith('https://cloud.umami.is/') ? route.abort() : route.continue());
+      await fallback.addInitScript(() => localStorage.setItem('delightech.analytics-choice', 'denied'));
+      await fallback.route('**/*', route => route.request().resourceType() === 'font' || new URL(route.request().url()).pathname === '/api/send' ? route.abort() : route.continue());
       await fallback.goto(base);
       await fallback.getByRole('heading', { name: /Good software begins/ }).waitFor();
       const declineFallback = fallback.getByRole('button', { name: 'Decline', exact: true });
